@@ -2,7 +2,7 @@
 :root {
     --primary: #b1804f;
     --secondary: #753d29;
-    --light: #F5F8F2;
+    --light: #f8f6f2;
     --dark: #252C30;
 }
 
@@ -398,7 +398,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(138, 180, 78, .3);
+    background: rgba(255, 203, 34, 0.3);
     opacity: 0;
     transition: .5s;
 }
