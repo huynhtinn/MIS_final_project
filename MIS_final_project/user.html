@@ -124,6 +124,10 @@
                     <button class="btn btn-primary" onclick="showChangePassword()">Change Password</button>
                     <button class="btn btn-primary" onclick="showOrderHistory()">Order History</button>
                     <button class="btn btn-primary" onclick="showVouchers()">Vouchers</button>
+                    <div id="orderStatus" class="mt-4">
+                        <h4>Order Status</h4>
+                        <p id="orderDetails"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -221,7 +225,9 @@
             event.preventDefault();
             // Simulate login success
             const userName = 'John Doe'; // Replace with actual user name from server
+            const orderDetails = 'Shipper has arrived at the restaurant, Shipper has picked up the order, Order is on the way'; // Replace with actual order details from server
             document.getElementById('userName').innerText = `Welcome, ${userName}`;
+            document.getElementById('orderDetails').innerText = orderDetails;
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registerForm').style.display = 'none';
             document.getElementById('userInfo').style.display = 'block';
