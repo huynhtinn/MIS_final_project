@@ -1,8 +1,8 @@
 /********** Template CSS **********/
 :root {
-    --primary: #88B44E;
-    --secondary: #FB9F38;
-    --light: #F5F8F2;
+    --primary: #b1804f;
+    --secondary: #753d29;
+    --light: #f8f6f2;
     --dark: #252C30;
 }
 
@@ -167,7 +167,7 @@
     bottom: 0;
     display: flex;
     align-items: center;
-    background: rgba(136, 180, 78, .7);
+    background: rgba(233, 198, 84, 0.7);
     z-index: 1;
 }
 
@@ -200,7 +200,7 @@
 }
 
 .page-header {
-    background: linear-gradient(rgba(136, 180, 78, .7), rgba(136, 180, 78, .7)), url(../img/carousel-1.jpg) center center no-repeat;
+    background: linear-gradient(rgba(233, 198, 84, 0.7), rgba(233, 198, 84, 0.7)), url(../img/carousel-1.jpg) center center no-repeat;
     background-size: cover;
 }
 
@@ -255,7 +255,7 @@
 
 /*** Products ***/
 .product {
-    background: linear-gradient(rgba(136, 180, 78, .1), rgba(136, 180, 78, .1)), url(../img/product-bg.png) left bottom no-repeat;
+    background: linear-gradient(rgba(180, 132, 78, 0.1), rgba(180, 132, 78, 0.1)), url(../img/product-bg.png) left bottom no-repeat;
     background-size: auto;
 }
 
@@ -290,7 +290,7 @@
 
 /*** About ***/
 .video {
-    background: linear-gradient(rgba(136, 180, 78, .85), rgba(136, 180, 78, .85)), url(../img/video-bg.jpg) center center no-repeat;
+    background: linear-gradient(rgba(233, 198, 84, 0.7), rgba(233, 198, 84, 0.7)), url(../img/video-bg.jpg) center center no-repeat;
     background-size: cover;
 }
 
@@ -398,7 +398,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(138, 180, 78, .3);
+    background: rgba(255, 203, 34, 0.3);
     opacity: 0;
     transition: .5s;
 }
@@ -420,7 +420,7 @@
 
 /*** Testimonial ***/
 .testimonial {
-    background: linear-gradient(rgba(136, 180, 78, .85), rgba(136, 180, 78, .85)), url(../img/testimonial-bg.jpg) center center no-repeat;
+    background: linear-gradient(rgba(233, 198, 84, 0.7), rgba(233, 198, 84, 0.7)), url(../img/testimonial-bg.jpg) center center no-repeat;
     background-size: cover;
 }
 
