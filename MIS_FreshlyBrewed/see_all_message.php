@@ -21,7 +21,7 @@
                         <div class="d-flex align-items-center">
                             <img class="rounded-circle" src="img/user.jpg" alt="User" style="width: 40px; height: 40px;">
                             <div class="ms-2">
-                                <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                <h6 class="fw-normal mb-0">Huy send you a message</h6>
                                 <small>15 minutes ago</small>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                         <div class="d-flex align-items-center">
                             <img class="rounded-circle" src="img/user.jpg" alt="User" style="width: 40px; height: 40px;">
                             <div class="ms-2">
-                                <h6 class="fw-normal mb-0">Jane sent you a message</h6>
+                                <h6 class="fw-normal mb-0">Tin sent you a message</h6>
                                 <small>1 hour ago</small>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                         <div class="d-flex align-items-center">
                             <img class="rounded-circle" src="img/user.jpg" alt="User" style="width: 40px; height: 40px;">
                             <div class="ms-2">
-                                <h6 class="fw-normal mb-0">Mark sent you a message</h6>
+                                <h6 class="fw-normal mb-0">Khoi sent you a message</h6>
                                 <small>2 hours ago</small>
                             </div>
                         </div>
