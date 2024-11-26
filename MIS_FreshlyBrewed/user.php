@@ -1,9 +1,28 @@
+<?php
+session_start();
+include 'db.php';
+
+// Redirect to login if not authenticated
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Fetch user information
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM Users WHERE UserID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>User Login & Registration</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -28,6 +47,12 @@
 </head>
 
 <body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
+
     <!-- Navbar Start -->
     <div class="container-fluid bg-white sticky-top">
         <div class="container">
@@ -58,6 +83,7 @@
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
                         <a href="cart.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-shopping-cart"></i></a>
                         <a href="user.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-user"></i></a>
+                        <a href="logout.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
             </nav>
@@ -68,10 +94,11 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
-            <h1 class="display-2 text-dark mb-4 animated slideInDown">User Login & Registration</h1>
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">User</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
                     <li class="breadcrumb-item text-dark" aria-current="page">User</li>
                 </ol>
             </nav>
@@ -79,59 +106,43 @@
     </div>
     <!-- Page Header End -->
 
-    <!-- User Form Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6" id="loginForm">
-                    <h3 class="mb-4">Login</h3>
-                    <form onsubmit="handleLogin(event)"></form>
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <button type="button" class="btn btn-link" onclick="showRegisterForm()">Register</button>
-                    </form>
-                </div>
-                <div class="col-lg-6" id="registerForm" style="display: none;">
-                    <h3 class="mb-4">Register</h3>
-                    <form onsubmit="handleRegister(event)">
-                        <div class="mb-3">
-                            <label for="registerName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="registerName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="registerEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="registerPassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        <button type="button" class="btn btn-link" onclick="showLoginForm()">Login</button>
-                    </form>
-                </div>
-                <div class="col-lg-6" id="userInfo" style="display: none;">
-                    <h3 class="mb-4">User Information</h3>
-                    <p id="userName"></p>
-                    <button class="btn btn-primary" onclick="showChangePassword()">Change Password</button>
-                    <button class="btn btn-primary" onclick="showOrderHistory()">Order History</button>
-                    <button class="btn btn-primary" onclick="showVouchers()">Vouchers</button>
-                    <div id="orderStatus" class="mt-4">
-                        <h4>Order Status</h4>
-                        <p id="orderDetails"></p>
-                    </div>
-                </div>
+    <!-- User Dashboard Start -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="mb-4">User Information</h3>
+                <p><strong>Name:</strong> <?php echo htmlspecialchars($user['FullName']); ?></p>
+                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['Email']); ?></p>
+                <p><strong>Phone:</strong> <?php echo htmlspecialchars($user['Phone']); ?></p>
+                <button class="btn btn-primary" onclick="showChangePassword()">Change Password</button>
+                <button class="btn btn-primary" onclick="showOrderHistory()">Order History</button>
+                <button class="btn btn-primary" onclick="showVouchers()">Vouchers</button>
             </div>
         </div>
+        <div id="changePassword" class="mt-4" style="display: none;">
+            <h4>Change Password</h4>
+            <form action="change_password.php" method="post">
+                <div class="form-group">
+                    <label for="current_password">Current Password:</label>
+                    <input type="password" class="form-control" id="current_password" name="current_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new_password">New Password:</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+        <div id="orderHistory" class="mt-4" style="display: none;">
+            <h4>Order History</h4>
+            <!-- Fetch and display order history from the database -->
+        </div>
+        <div id="vouchers" class="mt-4" style="display: none;">
+            <h4>Vouchers</h4>
+            <!-- Fetch and display vouchers from the database -->
+        </div>
     </div>
-    <!-- User Form End -->
+    <!-- User Dashboard End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -210,44 +221,22 @@
 
     <!-- Custom Javascript -->
     <script>
-        function showRegisterForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'block';
-        }
-
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('registerForm').style.display = 'none';
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            // Simulate login success
-            const userName = 'John Doe'; // Replace with actual user name from server
-            const orderDetails = 'Shipper has arrived at the restaurant, Shipper has picked up the order, Order is on the way'; // Replace with actual order details from server
-            document.getElementById('userName').innerText = `Welcome, ${userName}`;
-            document.getElementById('orderDetails').innerText = orderDetails;
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('userInfo').style.display = 'block';
-        }
-
-        function handleRegister(event) {
-            event.preventDefault();
-            // Simulate registration success
-            showLoginForm();
-        }
-
         function showChangePassword() {
-            alert('Change Password functionality');
+            document.getElementById('changePassword').style.display = 'block';
+            document.getElementById('orderHistory').style.display = 'none';
+            document.getElementById('vouchers').style.display = 'none';
         }
 
         function showOrderHistory() {
-            alert('Order History functionality');
+            document.getElementById('changePassword').style.display = 'none';
+            document.getElementById('orderHistory').style.display = 'block';
+            document.getElementById('vouchers').style.display = 'none';
         }
 
         function showVouchers() {
-            alert('Vouchers functionality');
+            document.getElementById('changePassword').style.display = 'none';
+            document.getElementById('orderHistory').style.display = 'none';
+            document.getElementById('vouchers').style.display = 'block';
         }
     </script>
 </body>

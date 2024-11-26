@@ -51,8 +51,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.php" class="nav-item nav-link">Home</a>
-                        <a href="about.php" class="nav-item nav-link active">About</a>
+                        <a href="index.php" class="nav-item nav-link active">Home</a>
+                        <a href="about.php" class="nav-item nav-link">About</a>
                         <a href="product.php" class="nav-item nav-link">Products</a>
                         <a href="store.php" class="nav-item nav-link">Store</a>
                         <div class="nav-item dropdown">
@@ -64,9 +64,12 @@
                             </div>
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
+                        <a href="dashboard.php" class="nav-item nav-link active">Dashboard</a>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
+                        <a href="cart.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-shopping-cart"></i></a>
+                        <a href="user.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-user"></i></a>
                     </div>
                 </div>
             </nav>

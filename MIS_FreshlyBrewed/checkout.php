@@ -52,6 +52,7 @@
                     <div class="navbar-nav ms-auto">
                         <a href="index.php" class="nav-item nav-link active">Home</a>
                         <a href="about.php" class="nav-item nav-link">About</a>
+                        <a href="product.php" class="nav-item nav-link">Products</a>
                         <a href="store.php" class="nav-item nav-link">Store</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -62,6 +63,7 @@
                             </div>
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
+                        <a href="dashboard.php" class="nav-item nav-link active">Dashboard</a>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
