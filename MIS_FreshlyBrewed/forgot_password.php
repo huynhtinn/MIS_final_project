@@ -19,7 +19,7 @@
                     <label for="floatingEmail">Email address</label>
                 </div>
                 <button type="submit" class="btn btn-primary py-3 w-100">Reset Password</button>
-                <p class="text-center mt-3"><a href="signin.html">Back to Login</a></p>
+                <p class="text-center mt-3"><a href="signin.php">Back to Login</a></p>
             </div>
         </div>
     </div>

@@ -26,8 +26,8 @@
                         <input type="text" class="form-control" id="floatingPhone" value="+1234567890" disabled>
                         <label for="floatingPhone">Phone</label>
                     </div>
-                    <a href="settings.html" class="btn btn-primary w-100">Edit Profile</a>
-                    <p class="text-center mt-3"><a href="dashboard.html">Back to Dashboard</a></p>
+                    <a href="settingsd.php" class="btn btn-primary w-100">Edit Profile</a>
+                    <p class="text-center mt-3"><a href="dashboardd.php">Back to Dashboard</a></p>
                 </form>
             </div>
         </div>

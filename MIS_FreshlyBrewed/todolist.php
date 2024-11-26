@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <p class="text-center mt-3"><a href="dashboard.html">Back to Dashboard</a></p>
+    <p class="text-center mt-3"><a href="dashboard.php">Back to Dashboard</a></p>
 
     <script>
         const taskInput = document.getElementById('task-input');

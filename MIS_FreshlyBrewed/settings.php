@@ -27,7 +27,7 @@
                         <label for="floatingPassword">New Password</label>
                     </div>
                     <button type="submit" class="btn btn-primary py-3 w-100">Save Changes</button>
-                    <p class="text-center mt-3"><a href="dashboard.html">Back to Dashboard</a></p>
+                    <p class="text-center mt-3"><a href="dashboard.php">Back to Dashboard</a></p>
                 </form>
             </div>
         </div>

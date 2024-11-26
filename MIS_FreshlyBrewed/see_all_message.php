@@ -51,7 +51,7 @@
                     <hr class="dropdown-divider">
                     <!-- Add more messages here -->
                 </div>
-                <p class="text-center mt-3"><a href="dashboard.html">Back to Dashboard</a></p>
+                <p class="text-center mt-3"><a href="dashboard.php">Back to Dashboard</a></p>
             </div>
         </div>
     </div>

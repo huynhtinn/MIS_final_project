@@ -48,7 +48,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="dashboard.html" class="">
+                            <a href="dashboard.php" class="">
                                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Freshly Brewed</h3>
                             </a>
                             <h3>Sign Up</h3>
@@ -70,10 +70,10 @@
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
                             </div>
-                            <a href="forgot_password.html">Forgot Password</a>
+                            <a href="forgot_password.php">Forgot Password</a>
                         </div>
                         <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
-                        <p class="text-center mb-0">Already have an Account? <a href="signin.html">Sign In</a></p>
+                        <p class="text-center mb-0">Already have an Account? <a href="signin.php">Sign In</a></p>
                     </div>
                 </div>
             </div>

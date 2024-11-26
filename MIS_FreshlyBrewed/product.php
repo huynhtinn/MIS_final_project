@@ -43,7 +43,7 @@
     <div class="container-fluid bg-white sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
-                <a href="index.html" class="navbar-brand">
+                <a href="index.php" class="navbar-brand">
                     <img class="img-fluid" src="img/logo.png" alt="Logo">
                 </a>
                 <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -51,19 +51,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="product.html" class="nav-item nav-link active">Products</a>
-                        <a href="store.html" class="nav-item nav-link">Store</a>
+                        <a href="index.php" class="nav-item nav-link">Home</a>
+                        <a href="about.php" class="nav-item nav-link">About</a>
+                        <a href="product.php" class="nav-item nav-link active">Products</a>
+                        <a href="store.php" class="nav-item nav-link">Store</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu bg-light rounded-0 m-0">
-                                <a href="feature.html" class="dropdown-item">Features</a>
-                                <a href="blog.html" class="dropdown-item">Blog Article</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="feature.php" class="dropdown-item">Features</a>
+                                <a href="blog.php" class="dropdown-item">Blog Article</a>
+                                <a href="testimonial.php" class="dropdown-item">Testimonial</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="contact.php" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
@@ -103,28 +103,28 @@
                     <img src="img/product-5.jpg" alt="">
                     <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                         <h4 class="text-primary">Matcha Lattes</h4>
-                        <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum</span>
+                        <span class="text-body">The combination of premium coffee and freshly squeezed juices makes this place unbeatable.</span>
                     </div>
                 </a>
                 <a href="" class="d-block product-item rounded">
                     <img src="img/product-6.jpg" alt="">
                     <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                         <h4 class="text-primary">Fruit Tea</h4>
-                        <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum</span>
+                        <span class="text-body">Whether it’s a morning coffee or a mid-day juice, Freshly Brewed never disappoints.</span>
                     </div>
                 </a>
                 <a href="" class="d-block product-item rounded">
                     <img src="img/product-7.jpg" alt="">
                     <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                         <h4 class="text-primary">Milk Tea</h4>
-                        <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum</span>
+                        <span class="text-body">From energizing coffee to revitalizing juices, they truly have something for everyone!</span>
                     </div>
                 </a>
                 <a href="" class="d-block product-item rounded">
                     <img src="img/product-8.jpg" alt="">
                     <div class="bg-white shadow-sm text-center p-4 position-relative mt-n5 mx-4">
                         <h4 class="text-primary">Coffee</h4>
-                        <span class="text-body">Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum</span>
+                        <span class="text-body">I’ve never tasted coffee this good, and the juices are made with the freshest ingredients</span>
                     </div>
                 </a>
             </div>

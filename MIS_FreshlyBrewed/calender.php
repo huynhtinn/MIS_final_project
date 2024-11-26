@@ -14,7 +14,7 @@
         <h2 class="text-center mb-4">Calendar</h2>
         <div id="calendar"></div>
     </div>
-    <p class="text-center mt-3"><a href="dashboard.html">Back to Dashboard</a></p>
+    <p class="text-center mt-3"><a href="dashboard.php">Back to Dashboard</a></p>
 
     <!-- Script to load the calendar -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

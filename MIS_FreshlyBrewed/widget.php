@@ -45,7 +45,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="dashboard.html" class="navbar-brand mx-4 mb-3">
+                <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Freshly Brewed</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="dashboard.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="widget.html" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Management</a>
+                    <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="widget.php" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Management</a>
                 </div>
             </nav>
         </div>
@@ -71,7 +71,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="dashboard.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -81,7 +81,7 @@
                     <input class="form-control border-0" type="search" placeholder="Search">
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
-                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Back to Frontend</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Back to Frontend</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-envelope me-lg-2"></i>
@@ -118,7 +118,7 @@
                                 </div>
                             </a>
                             <hr class="dropdown-divider">
-                            <a href="see_all_message.html" class="dropdown-item text-center">See all message</a>
+                            <a href="see_all_message.php" class="dropdown-item text-center">See all message</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -142,7 +142,7 @@
                                 <small>15 minutes ago</small>
                             </a>
                             <hr class="dropdown-divider">
-                            <a href="see_all_notification.html" class="dropdown-item text-center">See all notifications</a>
+                            <a href="see_all_notification.php" class="dropdown-item text-center">See all notifications</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -151,9 +151,9 @@
                             <span class="d-none d-lg-inline-flex">User</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="my_profile.html" class="dropdown-item">My Profile</a>
-                            <a href="settings.html" class="dropdown-item">Settings</a>
-                            <a href="signin.html" class="dropdown-item">Log Out</a>
+                            <a href="my_profile.php" class="dropdown-item">My Profile</a>
+                            <a href="settings.php" class="dropdown-item">Settings</a>
+                            <a href="signin.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h6 class="mb-0">Messages</h6>
-                                <a href="see_all_message.html">Show All</a>
+                                <a href="see_all_message.php">Show All</a>
                             </div>
                             <div class="d-flex align-items-center border-bottom py-3">
                                 <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
@@ -217,7 +217,7 @@
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">Calender</h6>
-                                <a href="calender.html">Show All</a>
+                                <a href="calender.php">Show All</a>
                             </div>
                             <div id="calender">
                                 <table style="width: 100%; border-collapse: collapse; text-align: center;">
@@ -258,7 +258,7 @@
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">To Do List</h6>
-                                <a href="todolist.html">Show All</a>
+                                <a href="todolist.php">Show All</a>
                             </div>
                             <div class="d-flex mb-2">
                                 <input class="form-control bg-transparent" type="text" placeholder="Enter task">
