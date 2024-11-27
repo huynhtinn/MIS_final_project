@@ -1,3 +1,68 @@
+<?php
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Start session and check for cart data
+        session_start();
+
+        // Make sure the cart is not empty
+        if (empty($_SESSION['cart'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Cart is empty.']);
+            exit();
+        }
+
+        // Get user ID from session (make sure user is logged in)
+        $userID = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+        if (!$userID) {
+            echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
+            exit();
+        }
+
+        // Calculate total amount (again to ensure we have the correct values)
+        $cart = $_SESSION['cart'];
+        $subtotal = array_reduce($cart, function($carry, $item) {
+            return $carry + ($item['price'] * $item['quantity']);
+        }, 0);
+        $tax = $subtotal * 0.15; // 15% tax
+        $totalAmount = $subtotal + $tax;
+
+        // Insert into Orders table
+        include 'db.php'; // DB connection
+        $sql = "INSERT INTO Orders (UserID, TotalAmount) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("id", $userID, $totalAmount);
+
+        if ($stmt->execute()) {
+            // Order placed successfully
+            $orderID = $stmt->insert_id;
+        
+            // Insert order details
+            foreach ($cart as $productID => $item) {
+                $unitPrice = $item['price'];
+                $quantity = $item['quantity'];
+                $orderDetailsSQL = "INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice) VALUES (?, ?, ?, ?)";
+                $detailsStmt = $conn->prepare($orderDetailsSQL);
+                $detailsStmt->bind_param("iiid", $orderID, $productID, $quantity, $unitPrice);
+                $detailsStmt->execute();
+            }
+        
+            // Clear the cart
+            unset($_SESSION['cart']);
+        
+            // Return a success response
+            echo json_encode(['status' => 'success', 'message' => 'Order placed successfully.']);
+            exit();
+        } else {
+            // Handle failure
+            echo json_encode(['status' => 'error', 'message' => 'Failed to place order.']);
+            exit();
+        }
+        
+    }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +72,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
+ 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -134,21 +199,23 @@
                         </div>
                     </form>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="bg-light p-4">
                         <h4 class="text-center">Order Summary</h4>
                         <div class="d-flex justify-content-between">
                             <h5>Subtotal</h5>
-                            <h5 id="order-subtotal">$0.00</h5>
+                            <h5 id="order-subtotal">$<?php echo number_format($subtotal, 2); ?></h5>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5>Tax</h5>
-                            <h5 id="order-tax">$0.00</h5>
+                            <h5 id="order-tax">$<?php echo number_format($tax, 2); ?></h5>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5>Total</h5>
-                            <h5 id="order-total">$0.00</h5>
+                            <h5 id="order-total">$<?php echo number_format($total, 2); ?></h5>
                         </div>
+
                         <h4 class="text-center mt-4">Payment Method</h4>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
@@ -162,13 +229,34 @@
                                 PayPal
                             </label>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3">Place Order</button>
+
+                        <!-- Place Order Button -->
+                        <button class="btn btn-primary w-100 mt-3" id="place-order-btn">Place Order</button>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
     <!-- Checkout End -->
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Payment Successful</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Your order has been placed successfully. Thank you for shopping with us!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -274,6 +362,34 @@
 
         document.addEventListener('DOMContentLoaded', updateOrderSummary);
     </script>
+
+    <script>
+        document.getElementById('place-order-btn').addEventListener('click', function() {
+            const formData = new FormData();
+            // Collect form data (if needed) to send with the POST request
+            // formData.append('field_name', field_value);
+
+            // Send the request
+            fetch('checkout.php', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Show the success popup
+                    alert('Payment Successful! Your order has been placed.');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your order.');
+            });
+        });
+    </script>
+
 </body>
 
 </html></div>

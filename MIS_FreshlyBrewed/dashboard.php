@@ -1,7 +1,80 @@
-<?php 
+<?php
+
+    session_start();
+    include 'db.php'; // Kết nối với database
+
+    // Lấy doanh thu hôm nay
+    $sql_today_revenue = "SELECT SUM(TotalAmount) AS TodayRevenue FROM Orders WHERE DATE(OrderDate) = CURDATE()";
+    $result = $conn->query($sql_today_revenue);
+    $today_revenue = $result->fetch_assoc()['TodayRevenue'] ?? 0;
+
+    // Lấy dữ liệu biểu đồ (theo ngày trong tháng)
+    $sql_chart_data = "
+        SELECT DATE(OrderDate) AS OrderDate, SUM(TotalAmount) AS TotalAmount
+        FROM Orders
+        WHERE MONTH(OrderDate) = MONTH(CURDATE()) AND YEAR(OrderDate) = YEAR(CURDATE())
+        GROUP BY DATE(OrderDate)
+    ";
+    $chart_data_result = $conn->query($sql_chart_data);
+
+    // Chuẩn bị dữ liệu cho Chart.js
+    $chart_dates = [];
+    $chart_revenues = [];
+    while ($row = $chart_data_result->fetch_assoc()) {
+        $chart_dates[] = $row['OrderDate'];
+        $chart_revenues[] = $row['TotalAmount'];
+    }
+
+    // Top 3 Best Drinks
+    $sql_best_drinks = "
+    SELECT p.ProductName, SUM(od.Quantity) AS TotalSold
+    FROM OrderDetails od
+    JOIN Products p ON od.ProductID = p.ProductID
+    GROUP BY p.ProductID, p.ProductName
+    ORDER BY TotalSold DESC
+    LIMIT 3;
+    ";
+    $result_best_drinks = $conn->query($sql_best_drinks);
+    $best_drinks = [];
+    while ($row = $result_best_drinks->fetch_assoc()) {
+    $best_drinks[] = $row;
+    }
+
+    // Sales & Revenue
+    $sql_sales_revenue = "
+    SELECT DATE(OrderDate) AS OrderDate, SUM(TotalAmount) AS TotalRevenue
+    FROM Orders
+    GROUP BY DATE(OrderDate)
+    ORDER BY OrderDate ASC;
+    ";
+    $result_sales_revenue = $conn->query($sql_sales_revenue);
+    $sales_dates = [];
+    $sales_revenues = [];
+    while ($row = $result_sales_revenue->fetch_assoc()) {
+    $sales_dates[] = $row['OrderDate'];
+    $sales_revenues[] = $row['TotalRevenue'];
+    }
+
+    // Machine Learning Forecast (Optional Python Script)
+    $forecast_revenues = []; // Dữ liệu dự đoán sẽ được tính toán sau.
+
+    // Recent Sales
+    $sql_recent_sales = "
+        SELECT o.OrderDate, o.OrderID, u.FullName AS Customer, o.TotalAmount, 'Paid' AS Status
+        FROM Orders o
+        JOIN Users u ON o.UserID = u.UserID
+        ORDER BY o.OrderDate DESC
+        LIMIT 5;
+    ";
+    $result_recent_sales = $conn->query($sql_recent_sales);
+    $recent_sales = [];
+    while ($row = $result_recent_sales->fetch_assoc()) {
+        $recent_sales[] = $row;
+    }
 
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -165,7 +238,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="my_profile.php" class="dropdown-item">My Profile</a>
                             <a href="settings.php" class="dropdown-item">Settings</a>
-                            <a href="signin.php" class="dropdown-item">Log Out</a>
+                            <a href="register.php" class="dropdown-item">Log Out</a>
 
 
                         </div>
@@ -182,18 +255,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <div id="today-revenue">$1234</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-area fa-3x text-primary"></i>
-                            <div class="ms-3">
                                 <p class="mb-2">Today Revenue</p>
-                                <div id="today-revenue">$1234</div>
+                                <div id="today-revenue">$<?php echo number_format($today_revenue, 2); ?></div>
                             </div>
                         </div>
                     </div>
@@ -202,10 +265,10 @@
             </div>
             <!-- Sale & Revenue End -->
 
-
             <!-- Sales Chart Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
+
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -225,6 +288,7 @@
                             <canvas id="sales-revenue-chart"></canvas>
                         </div>
                     </div>
+
                 </div>
             </div>
             <!-- Sales Chart End -->
@@ -234,7 +298,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
+                        <h6 class="mb-0">Recent Sales</h6>
                         <a href="">Show All</a>
                     </div>
                     <div class="table-responsive">
@@ -250,53 +314,69 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
+
+                            <!-- Recent Sales Table -->
                             <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
+                                <?php foreach ($recent_sales as $sale): ?>
+                                    <tr>
+                                        <td><input class="form-check-input" type="checkbox"></td>
+                                        <td><?php echo $sale['OrderDate']; ?></td>
+                                        <td>INV-<?php echo str_pad($sale['OrderID'], 4, '0', STR_PAD_LEFT); ?></td>
+                                        <td><?php echo $sale['Customer']; ?></td>
+                                        <td>$<?php echo number_format($sale['TotalAmount'], 2); ?></td>
+                                        <td><?php echo $sale['Status']; ?></td>
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
+
+                            <!-- <tbody>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01 Jan 2045</td>
+                                    <td>INV-0123</td>
+                                    <td>Huy Nguyen</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01 Jan 2045</td>
+                                    <td>INV-0123</td>
+                                    <td>Huy Nguyen</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01 Jan 2045</td>
+                                    <td>INV-0123</td>
+                                    <td>Huy Nguyen</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01 Jan 2045</td>
+                                    <td>INV-0123</td>
+                                    <td>Huy Nguyen</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                                <tr> 
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01 Jan 2045</td>
+                                    <td>INV-0123</td>
+                                    <td>Huy Nguyen</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                            </tbody> -->
                         </table>
                     </div>
                 </div>
@@ -658,6 +738,64 @@
                     tooltip: {
                         mode: 'dashboard.html',
                         intersect: false,
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Top 3 Best Drinks Chart -->
+    <script>
+        const drinksLabels = <?php echo json_encode(array_column($best_drinks, 'ProductName')); ?>;
+        const drinksData = <?php echo json_encode(array_column($best_drinks, 'TotalSold')); ?>;
+
+        const drinksCtx = document.getElementById('city-sales-chart').getContext('2d');
+        new Chart(drinksCtx, {
+            type: 'bar',
+            data: {
+                labels: drinksLabels,
+                datasets: [{
+                    label: 'Best Selling Drinks',
+                    data: drinksData,
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Sales & Revenue Chart -->
+    <script>
+        const revenueLabels = <?php echo json_encode($sales_dates); ?>;
+        const revenueData = <?php echo json_encode($sales_revenues); ?>;
+
+        const revenueCtx = document.getElementById('sales-revenue-chart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: revenueLabels,
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenueData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }

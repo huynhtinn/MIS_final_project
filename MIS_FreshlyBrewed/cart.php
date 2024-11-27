@@ -19,6 +19,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'decrease' && isset($_GET['id']
     header('Location: cart.php');
     exit();
 }
+
+// Calculate the subtotal, tax, and total
+$subtotal = array_reduce($cart, function($carry, $item) {
+    return $carry + ($item['price'] * $item['quantity']);
+}, 0);
+
+$tax = $subtotal * 0.15; // Example tax rate of 15%
+$total = $subtotal + $tax;
+
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +100,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'decrease' && isset($_GET['id']
     <!-- Page Header End -->
 
     <!-- Cart Start -->
-    <div class="container-xxl py-5">
+    < class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-8">
@@ -114,7 +123,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'decrease' && isset($_GET['id']
                                         <td><?php echo $item['quantity']; ?></td>
                                         <td>$<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
                                         <td>
-                                            <a href="cart.php?action=decrease&id=<?php echo $item['id']; ?>" class="btn btn-danger btn-sm">Decrease</a>
+                                            <a href="cart.php?action=decrease&id=<?php echo $item['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -122,39 +131,33 @@ if (isset($_GET['action']) && $_GET['action'] == 'decrease' && isset($_GET['id']
                         </table>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="bg-light p-4">
                         <h4 class="text-center">Cart Summary</h4>
                         <div class="d-flex justify-content-between">
                             <h5>Subtotal</h5>
                             <h5>
-                                $<?php
-                                $subtotal = array_reduce($cart, function($carry, $item) {
-                                    return $carry + ($item['price'] * $item['quantity']);
-                                }, 0);
-                                echo number_format($subtotal, 2);
-                                ?>
+                                $<?php echo number_format($subtotal, 2); ?>
                             </h5>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5>Tax</h5>
                             <h5>
-                                $<?php
-                                $tax = $subtotal * 0.1; // Example tax rate of 10%
-                                echo number_format($tax, 2);
-                                ?>
+                                $<?php echo number_format($tax, 2); ?>
                             </h5>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5>Total</h5>
-                            <h5>$<?php echo number_format($subtotal + $tax, 2); ?></h5>
+                            <h5>$<?php echo number_format($total, 2); ?></h5>
                         </div>
                         <button class="btn btn-primary w-100 mt-3" onclick="window.location.href='checkout.php'">Proceed to Checkout</button>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
+    </>
     <!-- Cart End -->
 
     <!-- JavaScript Libraries -->

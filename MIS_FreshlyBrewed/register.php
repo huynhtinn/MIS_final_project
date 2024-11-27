@@ -1,29 +1,35 @@
 <?php
 session_start();
 include 'db.php';
-
+ 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $password = $_POST['password'];
+    $retypePassword = $_POST['retype_password'];
 
-    // Hash the password
-    $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-
-    // Insert user into the database
-    $sql = "INSERT INTO Users (FullName, Email, PasswordHash, Phone) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $fullname, $email, $passwordHash, $phone);
-
-    if ($stmt->execute()) {
-        header('Location: login.php');
-        exit();
+    // Kiểm tra nếu mật khẩu nhập lại không khớp
+    if ($password !== $retypePassword) {
+        $error = "Passwords do not match!";
     } else {
-        $error = "Error: " . $stmt->error;
-    }
+        // Hash the password
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-    $stmt->close();
+        // Insert user into the database
+        $sql = "INSERT INTO Users (FullName, Email, PasswordHash, Phone) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $fullname, $email, $passwordHash, $phone);
+
+        if ($stmt->execute()) {
+            header('Location: login.php');
+            exit();
+        } else {
+            $error = "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
 }
 ?>
 
@@ -41,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
@@ -57,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    
     <!-- Registration Form Start -->
     <div class="container">
         <h2>Register</h2>
@@ -79,7 +82,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <span class="input-group-text">
+                        <i class="fas fa-eye-slash" id="togglePassword"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="retype_password">Retype Password:</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="retype_password" name="retype_password" required>
+                    <span class="input-group-text">
+                        <i class="fas fa-eye-slash" id="toggleRetypePassword"></i>
+                    </span>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
             <a href="login.php" class="btn btn-link">Login</a>
@@ -90,13 +107,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        document.getElementById('toggleRetypePassword').addEventListener('click', function () {
+            const retypePasswordInput = document.getElementById('retype_password');
+            const type = retypePasswordInput.type === 'password' ? 'text' : 'password';
+            retypePasswordInput.type = type;
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 
 </html>

@@ -20,7 +20,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
             'price' => $product_price,
             'quantity' => 1
         );
-
+ 
         if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
             if (isset($cart[$product_id])) {
@@ -262,6 +262,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 with a straw. This refreshing beverage is perfect for those who need a caffeine boost.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
+
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
                             <form method="post" action="store.php?action=add&id=6">
@@ -270,6 +271,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
                             </form>
                         </div>
+
                     </div>
                 </div>
 
@@ -291,10 +293,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 This unique blend offers a revitalizing and healthful experience.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
+
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <a href="cart.php" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></a>
+                            <form method="post" action="store.php?action=add&id=6">
+                                <input type="hidden" name="product_name" value="Matcha Mint Cooler">
+                                <input type="hidden" name="product_price" value="19.00">
+                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
+                            </form>
                         </div>
+
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -315,7 +323,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <a href="cart.php" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></a>
+                            <form method="post" action="store.php?action=add&id=6">
+                                <input type="hidden" name="product_name" value="Mango Sunrise">
+                                <input type="hidden" name="product_price" value="19.00">
+                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -337,7 +349,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <a href="cart.php" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></a>
+                            <form method="post" action="store.php?action=add&id=6">
+                                <input type="hidden" name="product_name" value="Watermelon Refresher">
+                                <input type="hidden" name="product_price" value="19.00">
+                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -359,7 +375,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <a href="cart.php" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></a>
+                            <form method="post" action="store.php?action=add&id=6">
+                                <input type="hidden" name="product_name" value="Fruit Fantasy Fizz">
+                                <input type="hidden" name="product_price" value="19.00">
+                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>

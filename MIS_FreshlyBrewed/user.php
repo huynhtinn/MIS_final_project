@@ -16,6 +16,14 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
+
+// Fetch order history
+$orderHistoryQuery = "SELECT OrderID, OrderDate, TotalAmount FROM Orders WHERE UserID = ?";
+$orderStmt = $conn->prepare($orderHistoryQuery);
+$orderStmt->bind_param("i", $user_id);
+$orderStmt->execute();
+$orderResult = $orderStmt->get_result();
+$orders = $orderResult->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -115,7 +123,38 @@ $user = $result->fetch_assoc();
                 <p><strong>Email:</strong> <?php echo htmlspecialchars($user['Email']); ?></p>
                 <p><strong>Phone:</strong> <?php echo htmlspecialchars($user['Phone']); ?></p>
                 <button class="btn btn-primary" onclick="showChangePassword()">Change Password</button>
+                
                 <button class="btn btn-primary" onclick="showOrderHistory()">Order History</button>
+                <div id="orderHistory" class="mt-4" style="display: none;">
+                    <h4>Order History</h4>
+                    <?php if (count($orders) > 0): ?>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Order Date</th>
+                                    <th>Total Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($orders as $order): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($order['OrderID']); ?></td>
+                                        <td><?php echo htmlspecialchars($order['OrderDate']); ?></td>
+                                        <td><?php echo number_format($order['TotalAmount'], 2); ?></td>
+                                        <td>
+                                            <a href="order_details.php?order_id=<?php echo $order['OrderID']; ?>" class="btn btn-sm btn-primary">View Details</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No orders found.</p>
+                    <?php endif; ?>
+                </div>
+
                 <button class="btn btn-primary" onclick="showVouchers()">Vouchers</button>
             </div>
         </div>
