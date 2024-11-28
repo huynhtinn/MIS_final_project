@@ -52,8 +52,8 @@
     $sales_dates = [];
     $sales_revenues = [];
     while ($row = $result_sales_revenue->fetch_assoc()) {
-    $sales_dates[] = $row['OrderDate'];
-    $sales_revenues[] = $row['TotalRevenue'];
+        $sales_dates[] = $row['OrderDate'];
+        $sales_revenues[] = $row['TotalRevenue'];
     }
 
     // Machine Learning Forecast (Optional Python Script)
@@ -83,15 +83,40 @@
     $weekly_sales_result = $conn->query($sql_weekly_sales);
     $weekly_sales_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $weekly_order_counts = array_fill(0, 7, 0);
-    while ($row = $weekly_sales_result->fetch_assoc()) {
-        $index = array_search($row['OrderDay'], $weekly_sales_days);
-        $weekly_order_counts[$index] = $row['OrderCount'];
+        while ($row = $weekly_sales_result->fetch_assoc()) {
+            $index = array_search($row['OrderDay'], $weekly_sales_days);
+            $weekly_order_counts[$index] = $row['OrderCount'];
     }
 
     // Encode data for JavaScript
     $weekly_sales_days_json = json_encode($weekly_sales_days);
     $weekly_order_counts_json = json_encode($weekly_order_counts);
+
+
+
+    // Hardcoded sample data for revenue and profit by quarter
+    $quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+    $revenues = [10000, 15000, 20000, 25000];
+    $profits = [5000, 7500, 10000, 12500];
+
+    // Hardcoded sample data for branch performance
+    $branches = ['Ha Noi', 'Ho Chi Minh City', 'Da Nang'];
+    $branch_revenues = [30000, 50000, 10000];
+
+    // Hardcoded sample data for market trends
+    $market_trends = [10, 15, 20, 25];
+
+    // Encode data for JavaScript
+    $weekly_sales_days_json = json_encode($weekly_sales_days);
+    $weekly_order_counts_json = json_encode($weekly_order_counts);
+    $quarters_json = json_encode($quarters);
+    $revenues_json = json_encode($revenues);
+    $profits_json = json_encode($profits);
+    $branches_json = json_encode($branches);
+    $branch_revenues_json = json_encode($branch_revenues);
+    $market_trends_json = json_encode($market_trends);
     ?>
+
 
 
 
@@ -327,6 +352,63 @@
                 </div>
             </div>
             <!-- Weekly Sales Chart End -->
+
+            <!-- Quarterly Chart Start -->
+             
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <h6 class="mb-0">Revenue and Profit by Quarter</h6>
+                            <canvas id="quarterly-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <h6 class="mb-0">Branch Performance</h6>
+                            <canvas id="branch-performance-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <h6 class="mb-0">Market Trends</h6>
+                            <canvas id="market-trends-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <div class="chart-container">
+                            <canvas id="market-trends-chart"></canvas>
+                            <h6 class="mb-0">Reviews of the past year</h6>
+                            <table class="trend-table table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Season</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Winter</td>
+                                        <td>Highest revenue</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spring</td>
+                                        <td>Revenue mainly from fruit tea and milk tea products from young customers</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Summer</td>
+                                        <td>Increased sales of cold beverages</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fall</td>
+                                        <td>Steady sales with a mix of hot and cold beverages</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
@@ -830,7 +912,98 @@
         });
     </script>
 
+    <!-- Quarterly Revenue and Profit Chart -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quarterly Revenue and Profit Chart
+            const quarterlyCtx = document.getElementById('quarterly-chart').getContext('2d');
+            new Chart(quarterlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: <?php echo $quarters_json; ?>,
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: <?php echo $revenues_json; ?>,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Profit',
+                            data: <?php echo $profits_json; ?>,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
 
+            // Branch Performance Chart
+            const branchPerformanceCtx = document.getElementById('branch-performance-chart').getContext('2d');
+            new Chart(branchPerformanceCtx, {
+                type: 'pie',
+                data: {
+                    labels: <?php echo $branches_json; ?>,
+                    datasets: [{
+                        data: <?php echo $branch_revenues_json; ?>,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Market Trends Chart
+            const marketTrendsCtx = document.getElementById('market-trends-chart').getContext('2d');
+            new Chart(marketTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: <?php echo $quarters_json; ?>,
+                    datasets: [{
+                        label: 'Market Trends',
+                        data: <?php echo $market_trends_json; ?>,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

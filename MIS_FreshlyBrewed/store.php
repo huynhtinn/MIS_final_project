@@ -2,7 +2,6 @@
 session_start();
 include 'db.php';
 
-
 // Fetch products from the database
 $sql = "SELECT * FROM Products";
 $result = $conn->query($sql);
@@ -50,6 +49,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
