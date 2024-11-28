@@ -23,9 +23,9 @@
         $stmt->close();
 
         // Insert order details into OrderDetails table
-        $stmt = $conn->prepare("INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO OrderDetails (OrderID, ProductID, ProductName, Quantity, UnitPrice) VALUES (?, ?, ?, ?, ?)");
         foreach ($_SESSION['cart'] as $item) {
-            $stmt->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
+            $stmt->bind_param("iisid", $order_id, $item['id'], $item['name'], $item['quantity'], $item['price']);
             $stmt->execute();
         }
         $stmt->close();
@@ -44,6 +44,7 @@
     }, 0);
 
     $total = $subtotal;
+    $cart = $_SESSION['cart'];
 ?>
 
 
@@ -147,56 +148,50 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-8">
-                    <h4 class="mb-4">Billing Address</h4>
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="firstName" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="text" class="form-control" id="phone" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="state" class="form-label">State</label>
-                                <input type="text" class="form-control" id="state" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="zip" class="form-label">Zip Code</label>
-                                <input type="text" class="form-control" id="zip" required>
-                            </div>
-                        </div>
-                    </form>
+                    <h4 class="text-center">Order Summary</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="bg-light text-center">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($cart as $item): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($item['name']); ?></td>
+                                        <td>$<?php echo number_format($item['price'], 2); ?></td>
+                                        <td><?php echo $item['quantity']; ?></td>
+                                        <td>$<?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="col-lg-4">
                     <div class="bg-light p-4">
-                        <h4 class="text-center">Order Summary</h4>
+                        <h4 class="text-center">Cart Summary</h4>
                         <div class="d-flex justify-content-between">
                             <h5>Subtotal</h5>
-                            <h5 id="order-subtotal">$<?php echo number_format($subtotal, 2); ?></h5>
+                            <h5>
+                                $<?php echo number_format($subtotal, 2); ?>
+                            </h5>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <h5>Total</h5>
-                            <h5 id="order-total">$<?php echo number_format($total, 2); ?></h5>
+                            <h5 id="total-amount">$<?php echo number_format($total, 2); ?></h5>
+                        </div>
+
+                        <h4 class="text-center mt-4">Voucher</h4>
+                        <div class="position-relative w-100">
+                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" id="voucher-code" placeholder="Enter voucher code">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2" id="apply-voucher">Apply</button>
                         </div>
 
                         <h4 class="text-center mt-4">Payment Method</h4>
@@ -217,7 +212,6 @@
                         <button class="btn btn-primary w-100 mt-3" id="place-order-btn">Place Order</button>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -316,36 +310,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script>
-        // Example JavaScript to handle order summary
-        const orderItems = [
-            { name: 'Matcha Lattes', price: 5.00, quantity: 2 },
-            { name: 'Fruit Tea', price: 4.00, quantity: 1 },
-            { name: 'Milk Tea', price: 3.50, quantity: 3 }
-        ];
-
-        function updateOrderSummary() {
-            const orderSubtotal = document.getElementById('order-subtotal');
-            const orderTax = document.getElementById('order-tax');
-            const orderTotal = document.getElementById('order-total');
-
-            let subtotal = 0;
-
-            orderItems.forEach(item => {
-                const total = item.price * item.quantity;
-                subtotal += total;
-            });
-
-            const tax = subtotal * 0.1; // Example tax rate of 10%
-            const total = subtotal + tax;
-
-            orderSubtotal.innerText = `$${subtotal.toFixed(2)}`;
-            orderTax.innerText = `$${tax.toFixed(2)}`;
-            orderTotal.innerText = `$${total.toFixed(2)}`;
-        }
-
-        document.addEventListener('DOMContentLoaded', updateOrderSummary);
-    </script>
 
     <script>
         document.getElementById('place-order-btn').addEventListener('click', function() {

@@ -2,6 +2,17 @@
 session_start();
 include 'db.php';
 
+
+// Fetch products from the database
+$sql = "SELECT * FROM Products";
+$result = $conn->query($sql);
+$products = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+
 // Handle Add to Cart action
 if (isset($_GET['action']) && $_GET['action'] == 'add') {
     if (!isset($_SESSION['user_id'])) {
@@ -45,7 +56,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
 
 <head>
     <meta charset="utf-8">
-    <title>Tea Store</title>
+    <title>FreshlyBrewed</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -110,7 +121,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
                         <a href="cart.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-shopping-cart"></i></a>
                         <a href="user.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-user"></i></a>
-                        <a href="logout.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
             </nav>
@@ -136,247 +146,32 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
     <!-- Store Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-medium fst-italic text-primary">Online Store</p>
-                <h1 class="display-6">Discover the diverse and delightful flavors of our premium teas</h1>
-            </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-4.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
+                <?php foreach ($products as $product): ?>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="store-item position-relative text-center">
+                            <img class="img-fluid" src="<?php echo htmlspecialchars($product['ImageURL']); ?>" alt="Product Image">
+                            <div class="p-4">
+                                <div class="text-center mb-3">
+                                    <?php for ($i = 0; $i < 5; $i++): ?>
+                                        <small class="fa fa-star text-primary"></small>
+                                    <?php endfor; ?>
+                                </div>
+                                <h4 class="mb-3"><?php echo htmlspecialchars($product['ProductName']); ?></h4>
+                                <p><?php echo htmlspecialchars($product['Description']); ?></p>
+                                <h4 class="text-primary">$<?php echo number_format($product['Price'], 2); ?></h4>
                             </div>
-                            <h4 class="mb-3">Berry Bliss</h4>
-                            <p>A refreshing drink featuring a perfect blend of strawberries, raspberries, and blueberries. Garnished with rosemary and served over ice, this beverage is as delightful to look at as it is to taste.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=1">
-                                <input type="hidden" name="product_name" value="Berry Bliss">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
+                            <div class="store-overlay">
+                                <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
+                                <form method="post" action="store.php?action=add&id=<?php echo $product['ProductID']; ?>">
+                                    <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($product['ProductName']); ?>">
+                                    <input type="hidden" name="product_price" value="<?php echo $product['Price']; ?>">
+                                    <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-5.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Pomegranate Sparkle</h4>
-                            <p>Fresh pomegranate juice with floating pomegranate seeds, garnished with a sprig of rosemary. This drink is invigorating and full of energy.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=2">
-                                <input type="hidden" name="product_name" value="Pomegranate Sparkle">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-6.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Café Mocha Delight</h4>
-                            <p>A hot cup of mocha coffee topped with smooth milk foam, served on a wooden tray with roasted coffee beans. This drink offers a rich and warming flavor experience.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=3">
-                                <input type="hidden" name="product_name" value="Café Mocha Delight">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-7.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Purple Passion Juice</h4>
-                            <p>A vibrant purple drink served in a mason jar, with a refreshing blend of mixed berries and a hint of mint. Perfect for a hot day to rejuvenate your senses.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=4">
-                                <input type="hidden" name="product_name" value="Purple Passion Juice">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-8.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Iced Coffee Bliss</h4>
-                            <p>An invigorating iced coffee topped with frothy bubbles, served in a glass with a straw. This refreshing beverage is perfect for those who need a caffeine boost.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=5">
-                                <input type="hidden" name="product_name" value="Iced Coffee Bliss">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-9.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Matcha Mint Cooler</h4>
-                            <p>A refreshing green drink made with matcha and mint, served in a mason jar with a straw. This unique blend offers a revitalizing and healthful experience.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=6">
-                                <input type="hidden" name="product_name" value="Matcha Mint Cooler">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-10.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Mango Sunrise</h4>
-                            <p>An enticing orange drink infused with the sweetness of ripe mango pieces, served in a glass. This tropical delight is a perfect way to brighten your day.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=7">
-                                <input type="hidden" name="product_name" value="Mango Sunrise">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-11.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Fruit Fantasy Fizz</h4>
-                            <p>A playful pink drink featuring a medley of fruits and bubbles, served in a tall glass with a straw. This fun and fruity concoction is sure to delight your taste buds.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=8">
-                                <input type="hidden" name="product_name" value="Fruit Fantasy Fizz">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-12.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Watermelon Refresher</h4>
-                            <p>A delightful red drink with fresh watermelon pieces, served in a glass mug. This beverage is both hydrating and packed with flavor, ideal for summer.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=9">
-                                <input type="hidden" name="product_name" value="Watermelon Refresher">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

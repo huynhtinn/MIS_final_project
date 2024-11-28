@@ -25,20 +25,21 @@
         $chart_revenues[] = $row['TotalAmount'];
     }
 
-    // Top 3 Best Drinks
-    $sql_best_drinks = "
-    SELECT p.ProductName, SUM(od.Quantity) AS TotalSold
-    FROM OrderDetails od
-    JOIN Products p ON od.ProductID = p.ProductID
-    GROUP BY p.ProductID, p.ProductName
+        
+    // Top 3 Best-Selling Products
+    $sql_best_products = "
+    SELECT ProductName, SUM(Quantity) AS TotalSold
+    FROM OrderDetails
+    GROUP BY ProductName
     ORDER BY TotalSold DESC
     LIMIT 3;
     ";
-    $result_best_drinks = $conn->query($sql_best_drinks);
-    $best_drinks = [];
-    while ($row = $result_best_drinks->fetch_assoc()) {
-    $best_drinks[] = $row;
+    $result_best_products = $conn->query($sql_best_products);
+    $best_products = [];
+    while ($row = $result_best_products->fetch_assoc()) {
+        $best_products[] = $row;
     }
+
 
     // Sales & Revenue
     $sql_sales_revenue = "
@@ -369,6 +370,40 @@
             </div>
             <!-- Recent Sales End -->
 
+            <!-- top 3 best drinks -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Top 3 Best-Selling Products</h6>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Total Sold</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($best_products as $product): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($product['ProductName']); ?></td>
+                                            <td><?php echo $product['TotalSold']; ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- Vietnam Location Analysis Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12">
@@ -730,35 +765,6 @@
         });
     </script>
 
-    <!-- Top 3 Best Drinks Chart -->
-    <script>
-        const drinksLabels = <?php echo json_encode(array_column($best_drinks, 'ProductName')); ?>;
-        const drinksData = <?php echo json_encode(array_column($best_drinks, 'TotalSold')); ?>;
-
-        const drinksCtx = document.getElementById('city-sales-chart').getContext('2d');
-        new Chart(drinksCtx, {
-            type: 'bar',
-            data: {
-                labels: drinksLabels,
-                datasets: [{
-                    label: 'Best Selling Drinks',
-                    data: drinksData,
-                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
-                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-
     <!-- Sales & Revenue Chart -->
     <script>
         const revenueLabels = <?php echo json_encode($sales_dates); ?>;
@@ -788,7 +794,8 @@
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
+    <!-- sale per day -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Data for the chart
@@ -822,6 +829,8 @@
             new Chart(weeklySalesCtx, weeklySalesConfig);
         });
     </script>
+
+
 </body>
 
 </html>
