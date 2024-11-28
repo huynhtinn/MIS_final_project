@@ -4,13 +4,13 @@
 FreshlyBrewed’s Management Information System (MIS) supports the growth and operation of a premium coffee shop chain focused on quality, sustainability, and customer satisfaction in Vietnam, with plans to expand across Southeast Asia.
 
 # Account
-For User Purpose
-User
-123
+* For User Purpose
+- User
+- 123
 ____
-For Dashboard
-Admin 
-abc
+* For Dashboard
+ - Admin 
+ - abc
 
 ## Objectives
 - **Expansion**: Establish a presence nationwide and regionally.
