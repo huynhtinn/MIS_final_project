@@ -71,9 +71,27 @@
     while ($row = $result_recent_sales->fetch_assoc()) {
         $recent_sales[] = $row;
     }
+    // Lấy dữ liệu bán hàng trong tuần này
+    $sql_weekly_sales = "
+    SELECT DAYNAME(OrderDate) AS OrderDay, COUNT(*) AS OrderCount
+    FROM Orders
+    WHERE YEARWEEK(OrderDate, 1) = YEARWEEK(CURDATE(), 1)
+    GROUP BY DAYNAME(OrderDate)
+    ORDER BY FIELD(DAYNAME(OrderDate), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+    ";
+    $weekly_sales_result = $conn->query($sql_weekly_sales);
+    $weekly_sales_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $weekly_order_counts = array_fill(0, 7, 0);
+    while ($row = $weekly_sales_result->fetch_assoc()) {
+        $index = array_search($row['OrderDay'], $weekly_sales_days);
+        $weekly_order_counts[$index] = $row['OrderCount'];
+    }
 
+    // Encode data for JavaScript
+    $weekly_sales_days_json = json_encode($weekly_sales_days);
+    $weekly_order_counts_json = json_encode($weekly_order_counts);
+    ?>
 
-?>
 
 
 <!DOCTYPE html>
@@ -293,6 +311,21 @@
             </div>
             <!-- Sales Chart End -->
 
+            <!-- Weekly Sales Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Sales Per Day This Week</h6>
+                                <a href="">Show All</a>
+                            </div>
+                            <canvas id="weekly-sales-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Weekly Sales Chart End -->
 
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
@@ -330,53 +363,6 @@
                                 <?php endforeach; ?>
                             </tbody>
 
-                            <!-- <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr> 
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Huy Nguyen</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                            </tbody> -->
                         </table>
                     </div>
                 </div>
@@ -801,7 +787,41 @@
             }
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data for the chart
+            const weeklySalesDays = <?php echo $weekly_sales_days_json; ?>;
+            const weeklyOrderCounts = <?php echo $weekly_order_counts_json; ?>;
+
+            // Config for the weekly sales chart
+            const weeklySalesConfig = {
+                type: 'bar',
+                data: {
+                    labels: weeklySalesDays,
+                    datasets: [{
+                        label: 'Order Count',
+                        data: weeklyOrderCounts,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            // Render the weekly sales chart
+            const weeklySalesCtx = document.getElementById('weekly-sales-chart').getContext('2d');
+            new Chart(weeklySalesCtx, weeklySalesConfig);
+        });
+    </script>
 </body>
 
 </html>

@@ -101,7 +101,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                             <div class="dropdown-menu bg-light rounded-0 m-0">
                                 <a href="feature.php" class="dropdown-item">Features</a>
                                 <a href="blog.php" class="dropdown-item">Blog Article</a>
-                                <a href="testimonial.php" class="dropdown-item">Testimonial</a>
+                                <a href="testimonial.php" class="dropdown-item">Feedbacks</a>
                             </div>
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
@@ -153,9 +153,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Berry Bliss</h4>
-                            <p>A refreshing drink featuring a perfect blend of strawberries, raspberries, 
-                                and blueberries. Garnished with rosemary and served over ice, this beverage 
-                                is as delightful to look at as it is to taste.</p>
+                            <p>A refreshing drink featuring a perfect blend of strawberries, raspberries, and blueberries. Garnished with rosemary and served over ice, this beverage is as delightful to look at as it is to taste.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
                         <div class="store-overlay">
@@ -168,6 +166,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="store-item position-relative text-center">
                         <img class="img-fluid" src="img/store-product-5.jpg" alt="">
@@ -180,8 +179,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Pomegranate Sparkle</h4>
-                            <p>Fresh pomegranate juice with floating pomegranate seeds, garnished with a sprig of rosemary. 
-                                This drink is invigorating and full of energy.</p>
+                            <p>Fresh pomegranate juice with floating pomegranate seeds, garnished with a sprig of rosemary. This drink is invigorating and full of energy.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
                         <div class="store-overlay">
@@ -194,6 +192,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="store-item position-relative text-center">
                         <img class="img-fluid" src="img/store-product-6.jpg" alt="">
@@ -206,8 +205,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Café Mocha Delight</h4>
-                            <p>A hot cup of mocha coffee topped with smooth milk foam, served on a wooden
-                                 tray with roasted coffee beans. This drink offers a rich and warming flavor experience.</p>
+                            <p>A hot cup of mocha coffee topped with smooth milk foam, served on a wooden tray with roasted coffee beans. This drink offers a rich and warming flavor experience.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
                         <div class="store-overlay">
@@ -220,6 +218,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="store-item position-relative text-center">
                         <img class="img-fluid" src="img/store-product-7.jpg" alt="">
@@ -237,7 +236,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=6">
+                            <form method="post" action="store.php?action=add&id=4">
                                 <input type="hidden" name="product_name" value="Purple Passion Juice">
                                 <input type="hidden" name="product_price" value="19.00">
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
@@ -258,25 +257,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Iced Coffee Bliss</h4>
-                            <p>An invigorating iced coffee topped with frothy bubbles, served in a glass 
-                                with a straw. This refreshing beverage is perfect for those who need a caffeine boost.</p>
+                            <p>An invigorating iced coffee topped with frothy bubbles, served in a glass with a straw. This refreshing beverage is perfect for those who need a caffeine boost.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
-
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=6">
+                            <form method="post" action="store.php?action=add&id=5">
                                 <input type="hidden" name="product_name" value="Iced Coffee Bliss">
                                 <input type="hidden" name="product_price" value="19.00">
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
                             </form>
                         </div>
-
                     </div>
                 </div>
 
-                
-                <!-- Add more products similarly -->
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="store-item position-relative text-center">
                         <img class="img-fluid" src="img/store-product-9.jpg" alt="">
@@ -289,11 +283,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Matcha Mint Cooler</h4>
-                            <p>A refreshing green drink made with matcha and mint, served in a mason jar with a straw. 
-                                This unique blend offers a revitalizing and healthful experience.</p>
+                            <p>A refreshing green drink made with matcha and mint, served in a mason jar with a straw. This unique blend offers a revitalizing and healthful experience.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
-
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
                             <form method="post" action="store.php?action=add&id=6">
@@ -302,9 +294,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
                             </form>
                         </div>
-
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="store-item position-relative text-center">
                         <img class="img-fluid" src="img/store-product-10.jpg" alt="">
@@ -317,13 +309,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Mango Sunrise</h4>
-                            <p>An enticing orange drink infused with the sweetness of ripe mango pieces, served in a glass. 
-                                This tropical delight is a perfect way to brighten your day.</p>
+                            <p>An enticing orange drink infused with the sweetness of ripe mango pieces, served in a glass. This tropical delight is a perfect way to brighten your day.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=6">
+                            <form method="post" action="store.php?action=add&id=7">
                                 <input type="hidden" name="product_name" value="Mango Sunrise">
                                 <input type="hidden" name="product_price" value="19.00">
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
@@ -331,32 +322,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="store-item position-relative text-center">
-                        <img class="img-fluid" src="img/store-product-12.jpg" alt="">
-                        <div class="p-4">
-                            <div class="text-center mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <h4 class="mb-3">Watermelon Refresher</h4>
-                            <p>A delightful red drink with fresh watermelon pieces, served in a glass mug. 
-                                This beverage is both hydrating and packed with flavor, ideal for summer.</p>
-                            <h4 class="text-primary">$19.00</h4>
-                        </div>
-                        <div class="store-overlay">
-                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=6">
-                                <input type="hidden" name="product_name" value="Watermelon Refresher">
-                                <input type="hidden" name="product_price" value="19.00">
-                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="store-item position-relative text-center">
                         <img class="img-fluid" src="img/store-product-11.jpg" alt="">
@@ -369,13 +335,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                                 <small class="fa fa-star text-primary"></small>
                             </div>
                             <h4 class="mb-3">Fruit Fantasy Fizz</h4>
-                            <p>A playful pink drink featuring a medley of fruits and bubbles, served in a tall glass with a straw. 
-                                This fun and fruity concoction is sure to delight your taste buds.</p>
+                            <p>A playful pink drink featuring a medley of fruits and bubbles, served in a tall glass with a straw. This fun and fruity concoction is sure to delight your taste buds.</p>
                             <h4 class="text-primary">$19.00</h4>
                         </div>
                         <div class="store-overlay">
                             <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
-                            <form method="post" action="store.php?action=add&id=6">
+                            <form method="post" action="store.php?action=add&id=8">
                                 <input type="hidden" name="product_name" value="Fruit Fantasy Fizz">
                                 <input type="hidden" name="product_price" value="19.00">
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
@@ -383,6 +348,33 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="store-item position-relative text-center">
+                        <img class="img-fluid" src="img/store-product-12.jpg" alt="">
+                        <div class="p-4">
+                            <div class="text-center mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <h4 class="mb-3">Watermelon Refresher</h4>
+                            <p>A delightful red drink with fresh watermelon pieces, served in a glass mug. This beverage is both hydrating and packed with flavor, ideal for summer.</p>
+                            <h4 class="text-primary">$19.00</h4>
+                        </div>
+                        <div class="store-overlay">
+                            <a href="" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail <i class="fa fa-arrow-right ms-2"></i></a>
+                            <form method="post" action="store.php?action=add&id=9">
+                                <input type="hidden" name="product_name" value="Watermelon Refresher">
+                                <input type="hidden" name="product_price" value="19.00">
+                                <button type="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart <i class="fa fa-cart-plus ms-2"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
                 
                 
             </div>
@@ -406,3 +398,23 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
 </body>
 
 </html>
+
+
+<script>
+    document.querySelectorAll('form[action*="store.php?action=add"]').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fetchSalesData(); // Update the chart data
+                }
+            });
+        });
+    });
+</script>

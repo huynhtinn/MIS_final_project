@@ -60,7 +60,7 @@
                             <div class="dropdown-menu bg-light rounded-0 m-0">
                                 <a href="feature.php" class="dropdown-item">Features</a>
                                 <a href="blog.php" class="dropdown-item">Blog Article</a>
-                                <a href="testimonial.php" class="dropdown-item">Testimonial</a>
+                                <a href="testimonial.php" class="dropdown-item">Feedbacks</a>
                             </div>
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>

@@ -1,64 +1,49 @@
 <?php
+    session_start();
+    include 'db.php';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Start session and check for cart data
-        session_start();
-
-        // Make sure the cart is not empty
-        if (empty($_SESSION['cart'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Cart is empty.']);
-            exit();
-        }
-
-        // Get user ID from session (make sure user is logged in)
-        $userID = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-        if (!$userID) {
-            echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
-            exit();
-        }
-
-        // Calculate total amount (again to ensure we have the correct values)
-        $cart = $_SESSION['cart'];
-        $subtotal = array_reduce($cart, function($carry, $item) {
-            return $carry + ($item['price'] * $item['quantity']);
-        }, 0);
-        $tax = $subtotal * 0.15; // 15% tax
-        $totalAmount = $subtotal + $tax;
-
-        // Insert into Orders table
-        include 'db.php'; // DB connection
-        $sql = "INSERT INTO Orders (UserID, TotalAmount) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("id", $userID, $totalAmount);
-
-        if ($stmt->execute()) {
-            // Order placed successfully
-            $orderID = $stmt->insert_id;
-        
-            // Insert order details
-            foreach ($cart as $productID => $item) {
-                $unitPrice = $item['price'];
-                $quantity = $item['quantity'];
-                $orderDetailsSQL = "INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice) VALUES (?, ?, ?, ?)";
-                $detailsStmt = $conn->prepare($orderDetailsSQL);
-                $detailsStmt->bind_param("iiid", $orderID, $productID, $quantity, $unitPrice);
-                $detailsStmt->execute();
-            }
-        
-            // Clear the cart
-            unset($_SESSION['cart']);
-        
-            // Return a success response
-            echo json_encode(['status' => 'success', 'message' => 'Order placed successfully.']);
-            exit();
-        } else {
-            // Handle failure
-            echo json_encode(['status' => 'error', 'message' => 'Failed to place order.']);
-            exit();
-        }
-        
+    // Check if cart is not empty
+    if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+        header('Location: cart.php');
+        exit();
     }
 
+    // Process checkout
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $user_id = $_SESSION['user_id'];
+        $total_amount = array_reduce($_SESSION['cart'], function($sum, $item) {
+            return $sum + ($item['price'] * $item['quantity']);
+        }, 0);
+
+        // Insert order into Orders table
+        $stmt = $conn->prepare("INSERT INTO Orders (UserID, TotalAmount) VALUES (?, ?)");
+        $stmt->bind_param("id", $user_id, $total_amount);
+        $stmt->execute();
+        $order_id = $stmt->insert_id;
+        $stmt->close();
+
+        // Insert order details into OrderDetails table
+        $stmt = $conn->prepare("INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice) VALUES (?, ?, ?, ?)");
+        foreach ($_SESSION['cart'] as $item) {
+            $stmt->bind_param("iiid", $order_id, $item['id'], $item['quantity'], $item['price']);
+            $stmt->execute();
+        }
+        $stmt->close();
+
+        // Clear the cart
+        unset($_SESSION['cart']);
+
+        // Return a success response
+        echo json_encode(['status' => 'success', 'message' => 'Order placed successfully.']);
+        exit();
+    }
+
+    // Calculate the subtotal, tax, and total
+    $subtotal = array_reduce($_SESSION['cart'], function($carry, $item) {
+        return $carry + ($item['price'] * $item['quantity']);
+    }, 0);
+
+    $total = $subtotal;
 ?>
 
 
@@ -156,6 +141,7 @@
     </div>
     <!-- Page Header End -->
 
+    
     <!-- Checkout Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -207,10 +193,7 @@
                             <h5>Subtotal</h5>
                             <h5 id="order-subtotal">$<?php echo number_format($subtotal, 2); ?></h5>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h5>Tax</h5>
-                            <h5 id="order-tax">$<?php echo number_format($tax, 2); ?></h5>
-                        </div>
+
                         <div class="d-flex justify-content-between">
                             <h5>Total</h5>
                             <h5 id="order-total">$<?php echo number_format($total, 2); ?></h5>
@@ -257,6 +240,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">

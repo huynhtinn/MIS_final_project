@@ -314,7 +314,7 @@
 
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Testimonial</h6>
+                            <h6 class="mb-4">Feedbacks</h6>
                             <div class="owl-carousel testimonial-carousel">
                                 <div class="testimonial-item text-center">
                                     <img class="img-fluid rounded-circle mx-auto mb-4" src="img/testimonial-1.jpg" style="width: 100px; height: 100px;">

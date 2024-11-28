@@ -25,8 +25,7 @@ $subtotal = array_reduce($cart, function($carry, $item) {
     return $carry + ($item['price'] * $item['quantity']);
 }, 0);
 
-$tax = $subtotal * 0.15; // Example tax rate of 15%
-$total = $subtotal + $tax;
+$total = $subtotal;
 
 ?>
 
@@ -67,7 +66,7 @@ $total = $subtotal + $tax;
                             <div class="dropdown-menu bg-light rounded-0 m-0">
                                 <a href="feature.php" class="dropdown-item">Features</a>
                                 <a href="blog.php" class="dropdown-item">Blog Article</a>
-                                <a href="testimonial.php" class="dropdown-item">Testimonial</a>
+                                <a href="testimonial.php" class="dropdown-item">Feedbacks</a>
                             </div>
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
@@ -141,12 +140,7 @@ $total = $subtotal + $tax;
                                 $<?php echo number_format($subtotal, 2); ?>
                             </h5>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h5>Tax</h5>
-                            <h5>
-                                $<?php echo number_format($tax, 2); ?>
-                            </h5>
-                        </div>
+
                         <div class="d-flex justify-content-between">
                             <h5>Total</h5>
                             <h5>$<?php echo number_format($total, 2); ?></h5>
