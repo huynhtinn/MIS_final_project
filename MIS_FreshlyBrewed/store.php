@@ -150,7 +150,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                 <?php foreach ($products as $product): ?>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="store-item position-relative text-center">
-                            <img class="img-fluid" src="<?php echo htmlspecialchars($product['ImageURL']); ?>" alt="Product Image">
+                            <?php
+                            // Debugging: Output the image URL
+                            ?>
+                            <img class="img-fluid" src="<?php echo htmlspecialchars($product['ImageUrl']); ?>" alt="Product Image">
                             <div class="p-4">
                                 <div class="text-center mb-3">
                                     <?php for ($i = 0; $i < 5; $i++): ?>

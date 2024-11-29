@@ -1,3 +1,24 @@
+<?php
+include 'db.php'; // Kết nối với database
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $message = $_POST['message'];
+    $category = $_POST['category'];
+    $rating = $_POST['rating'];
+
+    // Insert feedback into Feedbacks table
+    $stmt = $conn->prepare("INSERT INTO Feedbacks (Name, Email, Phone, Message, Category, Rating) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $name, $email, $phone, $message, $category, $rating);
+    $stmt->execute();
+    $stmt->close();
+
+    // Redirect to a thank you page or display a success message
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,39 +144,43 @@
             </div>
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <h3 class="mb-4">Contact Form</h3>
-                    <p class="mb-4">Need a quick phone call ?<a href="https://www.youtube.com"> Click Here</a>.</p>
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
-                                </div>
+                    <div class="container">
+                        <h2>Contact Us</h2>
+                        <form action="contact.php" method="post">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
-                                </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
-                                </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone">
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 120px"></textarea>
-                                    <label for="message">Message</label>
-                                </div>
+
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="Service">Service</option>
+                                    <option value="Drinks">Drink</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="Other">Other</option>
+
+                                </select>
                             </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
                             </div>
-                        </div>
-                    </form>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="h-100">

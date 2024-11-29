@@ -115,7 +115,18 @@
     $branches_json = json_encode($branches);
     $branch_revenues_json = json_encode($branch_revenues);
     $market_trends_json = json_encode($market_trends);
-    ?>
+
+
+    // Fetch recent feedbacks
+    $sql_feedbacks = "SELECT * FROM Feedbacks ORDER BY CreatedAt DESC LIMIT 5";
+    $result_feedbacks = $conn->query($sql_feedbacks);
+    $feedbacks = [];
+    if ($result_feedbacks->num_rows > 0) {
+        while ($row = $result_feedbacks->fetch_assoc()) {
+            $feedbacks[] = $row;
+        }
+    }
+?>
 
 
 
@@ -215,7 +226,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-envelope me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Message</span>
-                        </a>
+                        </a> 
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
@@ -502,90 +513,92 @@
             <!-- Widgets Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h6 class="mb-0">Messages</h6>
-                                <a href="see_all_message.php">Show All</a>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Huy Nguyen</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Huy Nguyen</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Huy Nguyen</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-3">
-                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Huy Nguyen</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>Short message goes here...</span>
-                                </div>
-                            </div>
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <div class="bg-light text-center rounded p-4">
+                        <h6 class="mb-0">Recent Feedbacks</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Message</th>
+                                        <th>Category</th>
+                                        <th>Rating</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($feedbacks as $feedback): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($feedback['Name']); ?></td>
+                                            <td><?php echo htmlspecialchars($feedback['Email']); ?></td>
+                                            <td><?php echo htmlspecialchars($feedback['Phone']); ?></td>
+                                            <td><?php echo htmlspecialchars($feedback['Message']); ?></td>
+                                            <td><?php echo htmlspecialchars($feedback['Category']); ?></td>
+                                            <td><?php echo htmlspecialchars($feedback['Rating']); ?></td>
+                                            <td><?php echo htmlspecialchars($feedback['CreatedAt']); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="calender.php">Show All</a>
-                            </div>
-                            <div id="calender">
-                                <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                    
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <h6 class="mb-0">Evaluate Feedbacks</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
                                     <thead>
-                                        <tr style="background-color: #f4f4f4;">
-                                            <th>Sun</th>
-                                            <th>Mon</th>
-                                            <th>Tue</th>
-                                            <th>Wed</th>
-                                            <th>Thu</th>
-                                            <th>Fri</th>
-                                            <th>Sat</th>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Average Rating</th>
+                                            <th>Negative Feedbacks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
-                                        </tr>
-                                        <tr>
-                                            <td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td>
-                                        </tr>
-                                        <tr>
-                                            <td>20</td><td>21</td><td style="background-color: #ffc107; color: white;">22</td><td>23</td><td>24</td><td>25</td><td>26</td>
-                                        </tr>
-                                        <tr>
-                                            <td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td>
-                                        </tr>
+                                        <?php
+                                        // Fetch categories
+                                        $sql_categories = "SELECT DISTINCT Category FROM Feedbacks";
+                                        $result_categories = $conn->query($sql_categories);
+                                        while ($category_row = $result_categories->fetch_assoc()) {
+                                            $category = $category_row['Category'];
+
+                                            // Calculate average rating for the category
+                                            $sql_avg_rating = "SELECT AVG(Rating) AS AvgRating FROM Feedbacks WHERE Category = '$category'";
+                                            $result_avg_rating = $conn->query($sql_avg_rating);
+                                            $avg_rating = $result_avg_rating->fetch_assoc()['AvgRating'];
+
+                                            // Fetch negative feedbacks for the category
+                                            $sql_negative_feedbacks = "SELECT Message FROM Feedbacks WHERE Category = '$category' AND Rating <= 3";
+                                            $result_negative_feedbacks = $conn->query($sql_negative_feedbacks);
+                                            $negative_feedbacks = [];
+                                            while ($feedback_row = $result_negative_feedbacks->fetch_assoc()) {
+                                                $negative_feedbacks[] = $feedback_row['Message'];
+                                            }
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($category); ?></td>
+                                                <td><?php echo number_format($avg_rating, 2); ?></td>
+                                                <td>
+                                                    <?php
+                                                    if (!empty($negative_feedbacks)) {
+                                                        echo '<ul>';
+                                                        foreach ($negative_feedbacks as $feedback) {
+                                                            echo '<li>' . htmlspecialchars($feedback) . '</li>';
+                                                        }
+                                                        echo '</ul>';
+                                                    } else {
+                                                        echo 'No negative feedbacks';
+                                                    }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>

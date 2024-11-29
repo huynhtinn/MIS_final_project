@@ -32,6 +32,7 @@ $products = [
         'description' => 'An enticing orange drink infused with the sweetness of ripe mango pieces, served in a glass. This tropical delight is a perfect way to brighten your day.',
         'price' => 19.00,
         'image' => 'img/store-product-11.jpg'
+        
     ]
     // Add more products as needed
 ];
