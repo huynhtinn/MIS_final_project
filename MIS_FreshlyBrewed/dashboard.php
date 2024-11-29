@@ -201,6 +201,9 @@
                 <div class="navbar-nav w-100">
                     <a href="dashboard.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="widget.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Management</a>
+                    <a href="analytics.php" class="nav-item nav-link"><i class="fa fa-chart-line me-2"></i>Analytics</a>
+                    <a href="Cus_segment.php" class="nav-item nav-link"><i class="fa fa-users-cog me-2"></i>Customer Segmentation</a>
+
                 </div>
             </nav>
         </div>
@@ -364,62 +367,6 @@
             </div>
             <!-- Weekly Sales Chart End -->
 
-            <!-- Quarterly Chart Start -->
-             
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Revenue and Profit by Quarter</h6>
-                            <canvas id="quarterly-chart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Branch Performance</h6>
-                            <canvas id="branch-performance-chart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Market Trends</h6>
-                            <canvas id="market-trends-chart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="chart-container">
-                            <canvas id="market-trends-chart"></canvas>
-                            <h6 class="mb-0">Reviews of the past year</h6>
-                            <table class="trend-table table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Season</th>
-                                        <th>Trend</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Winter</td>
-                                        <td>Highest revenue</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Spring</td>
-                                        <td>Revenue mainly from fruit tea and milk tea products from young customers</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Summer</td>
-                                        <td>Increased sales of cold beverages</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fall</td>
-                                        <td>Steady sales with a mix of hot and cold beverages</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
@@ -558,48 +505,61 @@
                                         <th>Category</th>
                                         <th>Average Rating</th>
                                         <th>Negative Feedbacks</th>
+                                        <th>Positive Feedbacks</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php
+                                // Fetch categories
+                                $sql_categories = "SELECT DISTINCT Category FROM Feedbacks";
+                                $result_categories = $conn->query($sql_categories);
+                                while ($category_row = $result_categories->fetch_assoc()) {
+                                    $category = $category_row['Category'];
+
+                                    // Calculate average rating for the category
+                                    $sql_avg_rating = "SELECT AVG(Rating) AS AvgRating FROM Feedbacks WHERE Category = '$category'";
+                                    $result_avg_rating = $conn->query($sql_avg_rating);
+                                    $avg_rating = $result_avg_rating->fetch_assoc()['AvgRating'];
+
+                                    // Fetch negative feedbacks for the category
+                                    $sql_negative_feedbacks = "SELECT Message FROM Feedbacks WHERE Category = '$category' AND Rating <= 3";
+                                    $result_negative_feedbacks = $conn->query($sql_negative_feedbacks);
+                                    $negative_feedbacks = [];
+                                    while ($negative_feedback = $result_negative_feedbacks->fetch_assoc()) {
+                                        $negative_feedbacks[] = $negative_feedback['Message'];
+                                    }
+
+                                    // Fetch positive feedbacks for the category
+                                    $sql_positive_feedbacks = "SELECT Message FROM Feedbacks WHERE Category = '$category' AND Rating >= 4";
+                                    $result_positive_feedbacks = $conn->query($sql_positive_feedbacks);
+                                    $positive_feedbacks = [];
+                                    while ($positive_feedback = $result_positive_feedbacks->fetch_assoc()) {
+                                        $positive_feedbacks[] = $positive_feedback['Message'];
+                                    }
+                                    ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($category); ?></td>
+                                        <td><?php echo number_format($avg_rating, 2); ?></td>
+                                        <td>
+                                            <ul>
+                                                <?php foreach ($negative_feedbacks as $feedback): ?>
+                                                    <li><?php echo htmlspecialchars($feedback); ?></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <?php foreach ($positive_feedbacks as $feedback): ?>
+                                                    <li><?php echo htmlspecialchars($feedback); ?></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </td>
+                                    </tr>
                                     <?php
-                                    // Fetch categories
-                                    $sql_categories = "SELECT DISTINCT Category FROM Feedbacks";
-                                    $result_categories = $conn->query($sql_categories);
-                                    while ($category_row = $result_categories->fetch_assoc()) {
-                                        $category = $category_row['Category'];
-
-                                        // Calculate average rating for the category
-                                        $sql_avg_rating = "SELECT AVG(Rating) AS AvgRating FROM Feedbacks WHERE Category = '$category'";
-                                        $result_avg_rating = $conn->query($sql_avg_rating);
-                                        $avg_rating = $result_avg_rating->fetch_assoc()['AvgRating'];
-
-                                        // Fetch negative feedbacks for the category
-                                        $sql_negative_feedbacks = "SELECT Message FROM Feedbacks WHERE Category = '$category' AND Rating <= 3";
-                                        $result_negative_feedbacks = $conn->query($sql_negative_feedbacks);
-                                        $negative_feedbacks = [];
-                                        while ($feedback_row = $result_negative_feedbacks->fetch_assoc()) {
-                                            $negative_feedbacks[] = $feedback_row['Message'];
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($category); ?></td>
-                                            <td><?php echo number_format($avg_rating, 2); ?></td>
-                                            <td>
-                                                <?php
-                                                if (!empty($negative_feedbacks)) {
-                                                    echo '<ul>';
-                                                    foreach ($negative_feedbacks as $feedback) {
-                                                        echo '<li>' . htmlspecialchars($feedback) . '</li>';
-                                                    }
-                                                    echo '</ul>';
-                                                } else {
-                                                    echo 'No negative feedbacks';
-                                                }
-                                                ?>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
+                                }
+                                ?>
+                            </tbody>
                             </table>
                         </div>
                     </div>
@@ -607,7 +567,7 @@
                     
 
                     <div class="col-sm-12">
-                        <div class="h-100 bg-light rounded p-4">
+                        <div class="h-100 bg-light rounded p-4">a
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">To Do List</h6>
                                 <a href="todolist.php">Show All</a>
