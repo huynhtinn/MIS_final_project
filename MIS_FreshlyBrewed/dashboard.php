@@ -513,7 +513,7 @@
             <!-- Widgets Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                <div class="col-sm-12 col-md-6 col-xl-6">
+                <div class="col-sm-12">
                     <div class="bg-light text-center rounded p-4">
                         <h6 class="mb-0">Recent Feedbacks</h6>
                         <div class="table-responsive">
@@ -548,65 +548,65 @@
                 </div>
 
                     
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Evaluate Feedbacks</h6>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
+                <div class="col-sm-12">
+                    <div class="bg-light text-center rounded p-4">
+                        <h6 class="mb-0">Evaluate Feedbacks</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Average Rating</th>
+                                        <th>Negative Feedbacks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Fetch categories
+                                    $sql_categories = "SELECT DISTINCT Category FROM Feedbacks";
+                                    $result_categories = $conn->query($sql_categories);
+                                    while ($category_row = $result_categories->fetch_assoc()) {
+                                        $category = $category_row['Category'];
+
+                                        // Calculate average rating for the category
+                                        $sql_avg_rating = "SELECT AVG(Rating) AS AvgRating FROM Feedbacks WHERE Category = '$category'";
+                                        $result_avg_rating = $conn->query($sql_avg_rating);
+                                        $avg_rating = $result_avg_rating->fetch_assoc()['AvgRating'];
+
+                                        // Fetch negative feedbacks for the category
+                                        $sql_negative_feedbacks = "SELECT Message FROM Feedbacks WHERE Category = '$category' AND Rating <= 3";
+                                        $result_negative_feedbacks = $conn->query($sql_negative_feedbacks);
+                                        $negative_feedbacks = [];
+                                        while ($feedback_row = $result_negative_feedbacks->fetch_assoc()) {
+                                            $negative_feedbacks[] = $feedback_row['Message'];
+                                        }
+                                        ?>
                                         <tr>
-                                            <th>Category</th>
-                                            <th>Average Rating</th>
-                                            <th>Negative Feedbacks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        // Fetch categories
-                                        $sql_categories = "SELECT DISTINCT Category FROM Feedbacks";
-                                        $result_categories = $conn->query($sql_categories);
-                                        while ($category_row = $result_categories->fetch_assoc()) {
-                                            $category = $category_row['Category'];
-
-                                            // Calculate average rating for the category
-                                            $sql_avg_rating = "SELECT AVG(Rating) AS AvgRating FROM Feedbacks WHERE Category = '$category'";
-                                            $result_avg_rating = $conn->query($sql_avg_rating);
-                                            $avg_rating = $result_avg_rating->fetch_assoc()['AvgRating'];
-
-                                            // Fetch negative feedbacks for the category
-                                            $sql_negative_feedbacks = "SELECT Message FROM Feedbacks WHERE Category = '$category' AND Rating <= 3";
-                                            $result_negative_feedbacks = $conn->query($sql_negative_feedbacks);
-                                            $negative_feedbacks = [];
-                                            while ($feedback_row = $result_negative_feedbacks->fetch_assoc()) {
-                                                $negative_feedbacks[] = $feedback_row['Message'];
-                                            }
-                                            ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($category); ?></td>
-                                                <td><?php echo number_format($avg_rating, 2); ?></td>
-                                                <td>
-                                                    <?php
-                                                    if (!empty($negative_feedbacks)) {
-                                                        echo '<ul>';
-                                                        foreach ($negative_feedbacks as $feedback) {
-                                                            echo '<li>' . htmlspecialchars($feedback) . '</li>';
-                                                        }
-                                                        echo '</ul>';
-                                                    } else {
-                                                        echo 'No negative feedbacks';
+                                            <td><?php echo htmlspecialchars($category); ?></td>
+                                            <td><?php echo number_format($avg_rating, 2); ?></td>
+                                            <td>
+                                                <?php
+                                                if (!empty($negative_feedbacks)) {
+                                                    echo '<ul>';
+                                                    foreach ($negative_feedbacks as $feedback) {
+                                                        echo '<li>' . htmlspecialchars($feedback) . '</li>';
                                                     }
-                                                    ?>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                                    echo '</ul>';
+                                                } else {
+                                                    echo 'No negative feedbacks';
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
                     
 
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12">
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">To Do List</h6>
@@ -620,7 +620,7 @@
                                 <input class="form-check-input m-0" type="checkbox">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
+                                        <span>Manage Daily Orders</span>
                                         <button class="btn btn-sm"><i class="fa fa-times"></i></button>
                                     </div>
                                 </div>
@@ -629,7 +629,7 @@
                                 <input class="form-check-input m-0" type="checkbox">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
+                                        <span>Monitor Inventory Levels</span>
                                         <button class="btn btn-sm"><i class="fa fa-times"></i></button>
                                     </div>
                                 </div>
@@ -638,7 +638,7 @@
                                 <input class="form-check-input m-0" type="checkbox" checked>
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><del>Short task goes here...</del></span>
+                                        <span><del>Handle Staff Scheduling</del></span>
                                         <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
                                     </div>
                                 </div>
@@ -647,7 +647,7 @@
                                 <input class="form-check-input m-0" type="checkbox">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
+                                        <span>Analyze Sales Performance</span>
                                         <button class="btn btn-sm"><i class="fa fa-times"></i></button>
                                     </div>
                                 </div>
@@ -656,7 +656,7 @@
                                 <input class="form-check-input m-0" type="checkbox">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
+                                        <span>Customize Promotions</span>
                                         <button class="btn btn-sm"><i class="fa fa-times"></i></button>
                                     </div>
                                 </div>
