@@ -3,6 +3,10 @@
 ## Overview
 FreshlyBrewed’s Management Information System (MIS) supports the growth and operation of a premium coffee shop chain focused on quality, sustainability, and customer satisfaction in Vietnam, with plans to expand across Southeast Asia.
 
+# Database on PhpMyAdmin
+* Create database name: freshlybreweddb
+* Import the freshlybreweddb.sql
+
 # Account
 * For User Purpose
 - User
