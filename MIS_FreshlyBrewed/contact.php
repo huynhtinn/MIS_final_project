@@ -251,7 +251,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     &copy; <a class="fw-medium" href="#">Group 07</a>, All Right Reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                     Designed By <a class="fw-medium" href="https://htmlcodex.com">Group 07</a>
                 </div>
             </div>
@@ -275,5 +274,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
-
+ 
 </html>
