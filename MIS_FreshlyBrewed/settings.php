@@ -15,11 +15,11 @@
             <div class="bg-white rounded p-4 shadow">
                 <form>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingName" placeholder="Full Name" value="John Doe">
+                        <input type="text" class="form-control" id="floatingName" placeholder="Full Name" value="Huy Nguyen">
                         <label for="floatingName">Full Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingEmail" placeholder="Email" value="johndoe@example.com">
+                        <input type="email" class="form-control" id="floatingEmail" placeholder="Email" value="huynguyen@gmail.com">
                         <label for="floatingEmail">Email</label>
                     </div>
                     <div class="form-floating mb-3">

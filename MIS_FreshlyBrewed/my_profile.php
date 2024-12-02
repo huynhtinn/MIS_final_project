@@ -15,18 +15,18 @@
             <div class="bg-white rounded p-4 shadow">
                 <form>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingName" value="John Doe" disabled>
+                        <input type="text" class="form-control" id="floatingName" value="Huy Nguyen" disabled>
                         <label for="floatingName">Full Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingEmail" value="johndoe@example.com" disabled>
+                        <input type="email" class="form-control" id="floatingEmail" value="huynguyen@gmail.com" disabled>
                         <label for="floatingEmail">Email</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingPhone" value="+1234567890" disabled>
                         <label for="floatingPhone">Phone</label>
                     </div>
-                    <a href="settingsd.php" class="btn btn-primary w-100">Edit Profile</a>
+                    <a href="settings.php" class="btn btn-primary w-100">Edit Profile</a>
                     <p class="text-center mt-3"><a href="dashboardd.php">Back to Dashboard</a></p>
                 </form>
             </div>

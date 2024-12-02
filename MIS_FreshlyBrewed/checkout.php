@@ -115,7 +115,6 @@
                             </div>
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
-                        <a href="dashboard.php" class="nav-item nav-link active">Dashboard</a>
                     </div>
                     <div class="border-start ps-4 d-none d-lg-block">
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
@@ -354,15 +353,35 @@
             .then(data => {
                 if (data.status === 'success') {
                     // Show the success popup
-                    alert('Payment Successful! Your order has been placed.');
-                    window.location.href = 'user.php';
+                    const successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+                        backdrop: 'static'
+                    });
+                    document.getElementById('successModalLabel').innerText = 'Payment Successful';
+                    document.querySelector('.modal-body').innerText = 'Your order has been placed successfully. Thank you for shopping with us!';
+                    successModal.show();
+
+                    // Chuyển hướng sau 3 giây
+                    setTimeout(() => {
+                        window.location.href = 'user.php';
+                    }, 3000);
                 } else {
-                    alert('Error: ' + data.message);
+                    // Hiển thị popup khi lỗi
+                    const errorModal = new bootstrap.Modal(document.getElementById('successModal'), {
+                        backdrop: 'static',
+                    });
+                    document.getElementById('successModalLabel').innerText = 'Error';
+                    document.querySelector('.modal-body').innerText = data.message || 'An error occurred while processing your order.';
+                    errorModal.show();
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while processing your order.');
+                const errorModal = new bootstrap.Modal(document.getElementById('successModal'), {
+                    backdrop: 'static',
+                });
+                document.getElementById('successModalLabel').innerText = 'Error';
+                document.querySelector('.modal-body').innerText = 'An unexpected error occurred.';
+                errorModal.show();
             });
         });
     </script>

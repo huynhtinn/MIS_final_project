@@ -18,12 +18,21 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 // Fetch order history
-$orderHistoryQuery = "SELECT OrderID, OrderDate, TotalAmount FROM Orders WHERE UserID = ?";
+$orderHistoryQuery = "SELECT OrderID, OrderDate, TotalAmount FROM Orders WHERE UserID = ? ORDER BY OrderDate DESC";
 $orderStmt = $conn->prepare($orderHistoryQuery);
 $orderStmt->bind_param("i", $user_id);
 $orderStmt->execute();
 $orderResult = $orderStmt->get_result();
 $orders = $orderResult->fetch_all(MYSQLI_ASSOC);
+
+$vouchers = [
+    ['code' => 'DISCOUNT10', 'description' => 'Get 10% off on your next purchase!'],
+    ['code' => 'FREESHIP', 'description' => 'Free shipping on orders over $50!'],
+    ['code' => 'BUY1GET1', 'description' => 'Buy one, get one free on selected items!'],
+    ['code' => 'SUMMER15', 'description' => '15% off during the summer sale!'],
+    ['code' => 'WELCOME5', 'description' => 'Welcome discount: $5 off for new users!'],
+];
+
 ?>
 
 <!DOCTYPE html>
@@ -154,8 +163,20 @@ $orders = $orderResult->fetch_all(MYSQLI_ASSOC);
                         <p>No orders found.</p>
                     <?php endif; ?>
                 </div>
-
                 <button class="btn btn-primary" onclick="showVouchers()">Vouchers</button>
+
+                <div id="vouchersList" class="mt-4" style="display: none;">
+                    <h4>Available Vouchers</h4>
+                    <ul class="list-group">
+                        <?php foreach ($vouchers as $voucher): ?>
+                            <li class="list-group-item">
+                                <strong><?php echo htmlspecialchars($voucher['code']); ?></strong>: 
+                                <?php echo htmlspecialchars($voucher['description']); ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+
             </div>
         </div>
         <div id="changePassword" class="mt-4" style="display: none;">
@@ -277,6 +298,19 @@ $orders = $orderResult->fetch_all(MYSQLI_ASSOC);
             document.getElementById('orderHistory').style.display = 'none';
             document.getElementById('vouchers').style.display = 'block';
         }
+    </script>
+
+    <script>
+        
+        function showVouchers() {
+            const vouchersList = document.getElementById('vouchersList');
+            if (vouchersList.style.display === 'none') {
+                vouchersList.style.display = 'block';
+            } else {
+                vouchersList.style.display = 'none';
+            }
+        }
+
     </script>
 </body>
 

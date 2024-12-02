@@ -15,6 +15,7 @@ if ($result->num_rows > 0) {
 // Handle Add to Cart action
 if (isset($_GET['action']) && $_GET['action'] == 'add') {
     if (!isset($_SESSION['user_id'])) {
+        echo json_encode(['success' => false, 'message' => 'Please login first.']);
         header('Location: login.php');
         exit();
     }
@@ -44,6 +45,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
 
         $_SESSION['cart'] = $cart;
 
+        echo json_encode(['success' => true]);
         header('Location: cart.php');
         exit();
     }
@@ -117,16 +119,25 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
                         </div>
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
                     </div>
+
                     <div class="border-start ps-4 d-none d-lg-block">
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
-                        <a href="cart.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-shopping-cart"></i></a>
+                        <a href="cart.php" class="btn btn-sm p-0 ms-3 position-relative">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                0
+                            </span>
+                        </a>
                         <a href="user.php" class="btn btn-sm p-0 ms-3"><i class="fa fa-user"></i></a>
                     </div>
+
                 </div>
             </nav>
         </div>
     </div>
     <!-- Navbar End -->
+
+
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
@@ -215,4 +226,47 @@ if (isset($_GET['action']) && $_GET['action'] == 'add') {
             });
         });
     });
+</script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hàm cập nhật số lượng giỏ hàng
+        function updateCartCount() {
+            fetch('update_cart_count.php')
+                .then(response => response.json())
+                .then(data => {
+                    const cartCountElement = document.getElementById('cart-count');
+                    cartCountElement.textContent = data.cart_count;
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        }
+
+        // Gọi updateCartCount khi trang được tải
+        updateCartCount();
+
+        // Xử lý sự kiện thêm sản phẩm vào giỏ hàng
+        document.querySelectorAll('form[action*="store.php?action=add"]').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateCartCount(); // Cập nhật số lượng giỏ hàng
+                            alert('Added to cart successfully!');
+                        } else {
+                            alert('Failed to add to cart.');
+                        }
+                    })
+                    .catch(error => console.error('Error adding to cart:', error));
+            });
+        });
+    });
+
 </script>

@@ -19,6 +19,27 @@
                 </div>
                 <ul class="list-group" id="task-list">
                     <!-- Tasks will appear here -->
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Manage Daily Orders
+                        <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Monitor Inventory Levels
+                        <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <del>Handle Staff Scheduling</del>
+                        <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Analyze Sales Performance
+                        <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Customize Promotions
+                        <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </li>
+
                 </ul>
             </div>
         </div>

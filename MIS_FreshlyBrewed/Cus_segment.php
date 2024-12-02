@@ -24,6 +24,41 @@ $customer_groups = [
         'peak_hours' => '5pm-8pm',
         'purchases' => 1600,
         'revenue' => 1000
+    ],
+    'Regulars' => [
+        'percentage' => 45,
+        'preferences' => 'Exclusive blends, personalized service',
+        'peak_hours' => '8am-10am',
+        'purchases' => 2500,
+        'revenue' => 3500
+    ],
+    'Tourists' => [
+        'percentage' => 25,
+        'preferences' => 'Local specialties, souvenirs',
+        'peak_hours' => '10am-12pm',
+        'purchases' => 1200,
+        'revenue' => 800
+    ],
+    'Families' => [
+        'percentage' => 20,
+        'preferences' => 'Kids menu, family-friendly',
+        'peak_hours' => '12pm-2pm',
+        'purchases' => 800,
+        'revenue' => 500
+    ],
+    'Health Enthusiasts' => [
+        'percentage' => 15,
+        'preferences' => 'Organic, vegan options',
+        'peak_hours' => '2pm-4pm',
+        'purchases' => 600,
+        'revenue' => 400
+    ],
+    'Night Owls' => [
+        'percentage' => 10,
+        'preferences' => 'Late-night menu, live music',
+        'peak_hours' => '8pm-10pm',
+        'purchases' => 400,
+        'revenue' => 300
     ]
 ];
 
@@ -110,8 +145,10 @@ $group_frequency = array_column($customer_groups, 'frequency');
                     <a href="dashboard.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="widget.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Management</a>
                     <a href="analytics.php" class="nav-item nav-link"><i class="fa fa-chart-line me-2"></i>Analytics</a>
-                    <a href="Cus_segment.php" class="nav-item nav-link"><i class="fa fa-users-cog me-2"></i>Customer Segmentation</a>
+                    <a href="Cus_segment.php" class="nav-item nav-link"><i class="fa fa-users-cog me-2"></i>Segmentation</a>
 
+                    <a href="peek_time.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>Peek Time</a>
+                    <a href="manage_locations.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>Real Estate</a>
                 </div>
             </nav>
         </div>
@@ -218,7 +255,7 @@ $group_frequency = array_column($customer_groups, 'frequency');
             <!-- Customer Segmentation Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-6">
+                    <div class="col-sm-12 col-md-4 col-xl-6">
                         <div class="bg-light text-center rounded p-4">
                             <h6 class="mb-0">Customer Segmentation - Pie Chart</h6>
                             <canvas id="customer-segmentation-pie-chart"></canvas>
