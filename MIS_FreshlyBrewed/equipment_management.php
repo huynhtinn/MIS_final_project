@@ -104,109 +104,6 @@
             </nav>
             <!-- Navbar End -->
 
-            <!-- Employee Management Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Employee Management</h6>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Contact</th>
-                                            <th>Email</th>
-                                            <th>Hire Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Nguyen Khoi</td>
-                                            <td>Manager</td>
-                                            <td>0987654123</td>
-                                            <td>522h0119@student.tdtu.edu.vn</td>
-                                            <td>2022-01-01</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nhat Huy</td>
-                                            <td>Barista</td>
-                                            <td>0987456123</td>
-                                            <td>522H0134@student.tdtu.edu.vn</td>
-                                            <td>2022-05-05</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Huynh Tin</td>
-                                            <td>Cashier</td>
-                                            <td>0789654123</td>
-                                            <td>522H0150@student.tdtu.edu.vn</td>
-                                            <td>2022-10-10</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ngoc Bao</td>
-                                            <td>Waiter</td>
-                                            <td>0987653214</td>
-                                            <td>522H0099@student.tdtu.edu.vn</td>
-                                            <td>2023-01-01</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Employee Management End -->
 
             <!-- Equipment Management Start -->
             <div class="container-fluid pt-4 px-4">
@@ -252,74 +149,42 @@
                 </div>
             </div>
             <!-- Equipment Management End -->
-
-<!-- Marketing Management Start -->
-<div class="container-fluid pt-4 px-4">
+            <!-- Performance Management Start -->
+            <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Marketing Management</h6>
+                            <h6 class="mb-4">Performance Management</h6>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Platform</th>
-                                            <th>Visits</th>
-                                            <th>Interactions</th>
-                                            <th>Brand Awareness</th>
+                                            <th>Equipment Name</th>
+                                            <th>Performance</th>
+                                            <th>Issues</th>
+                                            <th>Recommendations</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Article: FreshlyBrewed: Redefining the Coffee Experience</td>
-                                            <td>10,000</td>
-                                            <td>500</td>
+                                            <td>Coffee Machine</td>
                                             <td>High</td>
+                                            <td>None</td>
+                                            <td>Continue regular maintenance</td>
                                         </tr>
                                         <tr>
-                                            <td>Article: FreshlyBrewed's Commitment to Sustainable Coffee Farming</td>
-                                            <td>8,000</td>
-                                            <td>300</td>
+                                            <td>Refrigerator</td>
                                             <td>Medium</td>
+                                            <td>Occasional cooling issues</td>
+                                            <td>Check coolant levels</td>
                                         </tr>
                                         <tr>
-                                            <td>Article: Supporting Local Farmers: FreshlyBrewed's Nationwide Farm Investments</td>
-                                            <td>8,000</td>
-                                            <td>300</td>
-                                            <td>Medium</td>
+                                            <td>Blender</td>
+                                            <td>Low</td>
+                                            <td>Frequent breakdowns</td>
+                                            <td>Consider replacing with a new model</td>
                                         </tr>
-                                        <tr>
-                                            <td>Article: Innovative Technology Behind FreshlyBrewed's Superior Coffee</td>
-                                            <td>8,000</td>
-                                            <td>300</td>
-                                            <td>Medium</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Facebook</td>
-                                            <td>15,000</td>
-                                            <td>1,200</td>
-                                            <td>Very High</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Instagram</td>
-                                            <td>12,000</td>
-                                            <td>900</td>
-                                            <td>High</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiktok</td>
-                                            <td>50,000</td>
-                                            <td>20,000</td>
-                                            <td>Very High</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Google Ads</td>
-                                            <td>20,000</td>
-                                            <td>1,500</td>
-                                            <td>High</td>
-                                        </tr>
-                                        <!-- Add more platforms as needed -->
+                                        <!-- Add more performance data as needed -->
                                     </tbody>
                                 </table>
                             </div>
@@ -327,8 +192,41 @@
                     </div>
                 </div>
             </div>
-            <!-- Marketing Management End -->
-
+            <!-- Performance Management End -->
+            <!-- Equipment Details Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Add New Equipment</h6>
+                            <form action="add_equipment.php" method="post">
+                                <div class="mb-3">
+                                    <label for="equipmentName" class="form-label">Equipment Name</label>
+                                    <input type="text" class="form-control" id="equipmentName" name="equipmentName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="equipmentType" class="form-label">Type</label>
+                                    <input type="text" class="form-control" id="equipmentType" name="equipmentType" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="equipmentStatus" class="form-label">Status</label>
+                                    <select class="form-select" id="equipmentStatus" name="equipmentStatus" required>
+                                        <option value="Operational">Operational</option>
+                                        <option value="Needs Repair">Needs Repair</option>
+                                        <option value="Out of Service">Out of Service</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastMaintenanceDate" class="form-label">Last Maintenance Date</label>
+                                    <input type="date" class="form-control" id="lastMaintenanceDate" name="lastMaintenanceDate" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Equipment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Equipment Details End -->
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">

@@ -1,135 +1,3 @@
-<?php
-
-    session_start();
-    include 'db.php'; // Kết nối với database
-
-    // Lấy doanh thu hôm nay
-    $sql_today_revenue = "SELECT SUM(TotalAmount) AS TodayRevenue FROM Orders WHERE DATE(OrderDate) = CURDATE()";
-    $result = $conn->query($sql_today_revenue);
-    $today_revenue = $result->fetch_assoc()['TodayRevenue'] ?? 0;
-
-    // Lấy dữ liệu biểu đồ (theo ngày trong tháng)
-    $sql_chart_data = "
-        SELECT DATE(OrderDate) AS OrderDate, SUM(TotalAmount) AS TotalAmount
-        FROM Orders
-        WHERE MONTH(OrderDate) = MONTH(CURDATE()) AND YEAR(OrderDate) = YEAR(CURDATE())
-        GROUP BY DATE(OrderDate)
-    ";
-    $chart_data_result = $conn->query($sql_chart_data);
-
-    // Chuẩn bị dữ liệu cho Chart.js
-    $chart_dates = [];
-    $chart_revenues = [];
-    while ($row = $chart_data_result->fetch_assoc()) {
-        $chart_dates[] = $row['OrderDate'];
-        $chart_revenues[] = $row['TotalAmount'];
-    }
-
-        
-    // Top 3 Best-Selling Products
-    $sql_best_products = "
-    SELECT ProductName, SUM(Quantity) AS TotalSold
-    FROM OrderDetails
-    GROUP BY ProductName
-    ORDER BY TotalSold DESC
-    LIMIT 3;
-    ";
-    $result_best_products = $conn->query($sql_best_products);
-    $best_products = [];
-    while ($row = $result_best_products->fetch_assoc()) {
-        $best_products[] = $row;
-    }
-
-
-    // Sales & Revenue
-    $sql_sales_revenue = "
-    SELECT DATE(OrderDate) AS OrderDate, SUM(TotalAmount) AS TotalRevenue
-    FROM Orders
-    GROUP BY DATE(OrderDate)
-    ORDER BY OrderDate ASC;
-    ";
-    $result_sales_revenue = $conn->query($sql_sales_revenue);
-    $sales_dates = [];
-    $sales_revenues = [];
-    while ($row = $result_sales_revenue->fetch_assoc()) {
-        $sales_dates[] = $row['OrderDate'];
-        $sales_revenues[] = $row['TotalRevenue'];
-    }
-
-    // Machine Learning Forecast (Optional Python Script)
-    $forecast_revenues = []; // Dữ liệu dự đoán sẽ được tính toán sau.
-
-    // Recent Sales
-    $sql_recent_sales = "
-        SELECT o.OrderDate, o.OrderID, u.FullName AS Customer, o.TotalAmount, 'Paid' AS Status
-        FROM Orders o
-        JOIN Users u ON o.UserID = u.UserID
-        ORDER BY o.OrderDate DESC
-        LIMIT 5;
-    ";
-    $result_recent_sales = $conn->query($sql_recent_sales);
-    $recent_sales = [];
-    while ($row = $result_recent_sales->fetch_assoc()) {
-        $recent_sales[] = $row;
-    }
-    // Lấy dữ liệu bán hàng trong tuần này
-    $sql_weekly_sales = "
-    SELECT DAYNAME(OrderDate) AS OrderDay, COUNT(*) AS OrderCount
-    FROM Orders
-    WHERE YEARWEEK(OrderDate, 1) = YEARWEEK(CURDATE(), 1)
-    GROUP BY DAYNAME(OrderDate)
-    ORDER BY FIELD(DAYNAME(OrderDate), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
-    ";
-    $weekly_sales_result = $conn->query($sql_weekly_sales);
-    $weekly_sales_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    $weekly_order_counts = array_fill(0, 7, 0);
-        while ($row = $weekly_sales_result->fetch_assoc()) {
-            $index = array_search($row['OrderDay'], $weekly_sales_days);
-            $weekly_order_counts[$index] = $row['OrderCount'];
-    }
-
-    // Encode data for JavaScript
-    $weekly_sales_days_json = json_encode($weekly_sales_days);
-    $weekly_order_counts_json = json_encode($weekly_order_counts);
-
-
-
-    // Hardcoded sample data for revenue and profit by quarter
-    $quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
-    $revenues = [10000, 15000, 20000, 25000];
-    $profits = [5000, 7500, 10000, 12500];
-
-    // Hardcoded sample data for branch performance
-    $branches = ['Ha Noi', 'Ho Chi Minh City', 'Da Nang'];
-    $branch_revenues = [30000, 50000, 10000];
-
-    // Hardcoded sample data for market trends
-    $market_trends = [10, 15, 20, 25];
-
-    // Encode data for JavaScript
-    $weekly_sales_days_json = json_encode($weekly_sales_days);
-    $weekly_order_counts_json = json_encode($weekly_order_counts);
-    $quarters_json = json_encode($quarters);
-    $revenues_json = json_encode($revenues);
-    $profits_json = json_encode($profits);
-    $branches_json = json_encode($branches);
-    $branch_revenues_json = json_encode($branch_revenues);
-    $market_trends_json = json_encode($market_trends);
-
-
-    // Fetch recent feedbacks
-    $sql_feedbacks = "SELECT * FROM Feedbacks ORDER BY CreatedAt DESC LIMIT 5";
-    $result_feedbacks = $conn->query($sql_feedbacks);
-    $feedbacks = [];
-    if ($result_feedbacks->num_rows > 0) {
-        while ($row = $result_feedbacks->fetch_assoc()) {
-            $feedbacks[] = $row;
-        }
-    }
-?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -313,71 +181,75 @@
             </nav>
             <!-- Navbar End -->
 
-
-           
-            <!-- Quarterly Chart Start -->
-             
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Revenue and Profit by Quarter</h6>
-                            <canvas id="quarterly-chart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Market Trends</h6>
-                            <canvas id="market-trends-chart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 col-md-4 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <h6 class="mb-0">Branch Performance</h6>
-                            <canvas id="branch-performance-chart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="chart-container">
-                            <canvas id="market-trends-chart"></canvas>
-                            <h6 class="mb-0">Reviews of the past year</h6>
-                            <table class="trend-table table table-bordered">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Company Strategy</h6>
+                            <p>Our company aims to expand its market share by focusing on customer satisfaction and innovation. We plan to introduce new products and services that cater to the evolving needs of our customers. Additionally, we will invest in marketing and promotional activities to increase brand awareness and attract new customers.</p>
+                            <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Season</th>
-                                        <th>Trend</th>
+                                        <th scope="col">Year</th>
+                                        <th scope="col">Goal</th>
+                                        <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Winter</td>
-                                        <td>Highest revenue</td>
+                                        <td>2024</td>
+                                        <td>Expand Market Share</td>
+                                        <td>In Progress</td>
                                     </tr>
                                     <tr>
-                                        <td>Spring</td>
-                                        <td>Revenue mainly from fruit tea and milk tea products from young customers</td>
+                                        <td>2025</td>
+                                        <td>Introduce New Products</td>
+                                        <td>Planned</td>
                                     </tr>
                                     <tr>
-                                        <td>Summer</td>
-                                        <td>Increased sales of cold beverages</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fall</td>
-                                        <td>Steady sales with a mix of hot and cold beverages</td>
+                                        <td>2026</td>
+                                        <td>Increase Brand Awareness</td>
+                                        <td>Planned</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Development Insights</h6>
+                            <p>We are committed to continuous improvement and development. Our team is working on enhancing our existing products and developing new features that will provide more value to our customers. We are also exploring new technologies and trends to stay ahead of the competition and deliver innovative solutions.</p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project</th>
+                                        <th scope="col">Focus Area</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Product Enhancement</td>
+                                        <td>Existing Products</td>
+                                        <td>Ongoing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>New Feature Development</td>
+                                        <td>New Features</td>
+                                        <td>In Progress</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Technology Exploration</td>
+                                        <td>New Technologies</td>
+                                        <td>Planned</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-
+            
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
@@ -413,104 +285,8 @@
 
     <!-- Template Javascript -->
     <script src="js_dashboard/main.js"></script>
-
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-
-
-    <!-- Quarterly Revenue and Profit Chart -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Quarterly Revenue and Profit Chart
-            const quarterlyCtx = document.getElementById('quarterly-chart').getContext('2d');
-            new Chart(quarterlyCtx, {
-                type: 'bar',
-                data: {
-                    labels: <?php echo $quarters_json; ?>,
-                    datasets: [
-                        {
-                            label: 'Revenue',
-                            data: <?php echo $revenues_json; ?>,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Profit',
-                            data: <?php echo $profits_json; ?>,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-            // Branch Performance Chart
-            const branchPerformanceCtx = document.getElementById('branch-performance-chart').getContext('2d');
-            new Chart(branchPerformanceCtx, {
-                type: 'pie',
-                data: {
-                    labels: <?php echo $branches_json; ?>,
-                    datasets: [{
-                        data: <?php echo $branch_revenues_json; ?>,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-
-            // Market Trends Chart
-            const marketTrendsCtx = document.getElementById('market-trends-chart').getContext('2d');
-            new Chart(marketTrendsCtx, {
-                type: 'line',
-                data: {
-                    labels: <?php echo $quarters_json; ?>,
-                    datasets: [{
-                        label: 'Market Trends',
-                        data: <?php echo $market_trends_json; ?>,
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        borderWidth: 1,
-                        fill: false
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        });
+        
     </script>
 </body>
 

@@ -208,118 +208,80 @@
             </div>
             <!-- Employee Management End -->
 
-            <!-- Equipment Management Start -->
+            <!-- Additional Employee Management Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-xl-12">
+                    <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Equipment Management</h6>
+                            <h6 class="mb-4">Employee Attendance</h6>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Equipment Name</th>
-                                            <th>Type</th>
+                                            <th>Name</th>
+                                            <th>Date</th>
                                             <th>Status</th>
-                                            <th>Last Maintenance Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Coffee Machine</td>
-                                            <td>Coffee Equipment</td>
-                                            <td>Operational</td>
-                                            <td>2022-11-01</td>
+                                            <td>Nguyen Khoi</td>
+                                            <td>2023-10-01</td>
+                                            <td>Present</td>
                                         </tr>
                                         <tr>
-                                            <td>Refrigerator</td>
-                                            <td>Cooling Equipment</td>
-                                            <td>Operational</td>
-                                            <td>2022-10-15</td>
+                                            <td>Nhat Huy</td>
+                                            <td>2023-10-01</td>
+                                            <td>Absent</td>
                                         </tr>
                                         <tr>
-                                            <td>Blender</td>
-                                            <td>Blending Equipment</td>
-                                            <td>Needs Repair</td>
-                                            <td>2022-09-20</td>
+                                            <td>Huynh Tin</td>
+                                            <td>2023-10-01</td>
+                                            <td>Present</td>
                                         </tr>
-                                        <!-- Add more equipment as needed -->
+                                        <tr>
+                                            <td>Ngoc Bao</td>
+                                            <td>2023-10-01</td>
+                                            <td>Present</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- Equipment Management End -->
-
-<!-- Marketing Management Start -->
-<div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-12">
+                    <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Marketing Management</h6>
+                            <h6 class="mb-4">Employee Performance</h6>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Platform</th>
-                                            <th>Visits</th>
-                                            <th>Interactions</th>
-                                            <th>Brand Awareness</th>
+                                            <th>Name</th>
+                                            <th>Performance Score</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Article: FreshlyBrewed: Redefining the Coffee Experience</td>
-                                            <td>10,000</td>
-                                            <td>500</td>
-                                            <td>High</td>
+                                            <td>Nguyen Khoi</td>
+                                            <td>85</td>
+                                            <td>Good</td>
                                         </tr>
                                         <tr>
-                                            <td>Article: FreshlyBrewed's Commitment to Sustainable Coffee Farming</td>
-                                            <td>8,000</td>
-                                            <td>300</td>
-                                            <td>Medium</td>
+                                            <td>Nhat Huy</td>
+                                            <td>90</td>
+                                            <td>Excellent</td>
                                         </tr>
                                         <tr>
-                                            <td>Article: Supporting Local Farmers: FreshlyBrewed's Nationwide Farm Investments</td>
-                                            <td>8,000</td>
-                                            <td>300</td>
-                                            <td>Medium</td>
+                                            <td>Huynh Tin</td>
+                                            <td>75</td>
+                                            <td>Satisfactory</td>
                                         </tr>
                                         <tr>
-                                            <td>Article: Innovative Technology Behind FreshlyBrewed's Superior Coffee</td>
-                                            <td>8,000</td>
-                                            <td>300</td>
-                                            <td>Medium</td>
+                                            <td>Ngoc Bao</td>
+                                            <td>80</td>
+                                            <td>Good</td>
                                         </tr>
-
-                                        <tr>
-                                            <td>Facebook</td>
-                                            <td>15,000</td>
-                                            <td>1,200</td>
-                                            <td>Very High</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Instagram</td>
-                                            <td>12,000</td>
-                                            <td>900</td>
-                                            <td>High</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tiktok</td>
-                                            <td>50,000</td>
-                                            <td>20,000</td>
-                                            <td>Very High</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Google Ads</td>
-                                            <td>20,000</td>
-                                            <td>1,500</td>
-                                            <td>High</td>
-                                        </tr>
-                                        <!-- Add more platforms as needed -->
                                     </tbody>
                                 </table>
                             </div>
@@ -327,8 +289,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Marketing Management End -->
-
+            <!-- Additional Employee Management End -->
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">

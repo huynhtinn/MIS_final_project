@@ -104,157 +104,9 @@
             </nav>
             <!-- Navbar End -->
 
-            <!-- Employee Management Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Employee Management</h6>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Contact</th>
-                                            <th>Email</th>
-                                            <th>Hire Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Nguyen Khoi</td>
-                                            <td>Manager</td>
-                                            <td>0987654123</td>
-                                            <td>522h0119@student.tdtu.edu.vn</td>
-                                            <td>2022-01-01</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nhat Huy</td>
-                                            <td>Barista</td>
-                                            <td>0987456123</td>
-                                            <td>522H0134@student.tdtu.edu.vn</td>
-                                            <td>2022-05-05</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Huynh Tin</td>
-                                            <td>Cashier</td>
-                                            <td>0789654123</td>
-                                            <td>522H0150@student.tdtu.edu.vn</td>
-                                            <td>2022-10-10</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ngoc Bao</td>
-                                            <td>Waiter</td>
-                                            <td>0987653214</td>
-                                            <td>522H0099@student.tdtu.edu.vn</td>
-                                            <td>2023-01-01</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                                        <li><a class="dropdown-item" href="#">Fire</a></li>
-                                                        <li><a class="dropdown-item" href="#">Promote</a></li>
-                                                        <li><a class="dropdown-item" href="#">Invite to Meeting</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Employee Management End -->
 
-            <!-- Equipment Management Start -->
+            <!-- Marketing Management Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Equipment Management</h6>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Equipment Name</th>
-                                            <th>Type</th>
-                                            <th>Status</th>
-                                            <th>Last Maintenance Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Coffee Machine</td>
-                                            <td>Coffee Equipment</td>
-                                            <td>Operational</td>
-                                            <td>2022-11-01</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Refrigerator</td>
-                                            <td>Cooling Equipment</td>
-                                            <td>Operational</td>
-                                            <td>2022-10-15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Blender</td>
-                                            <td>Blending Equipment</td>
-                                            <td>Needs Repair</td>
-                                            <td>2022-09-20</td>
-                                        </tr>
-                                        <!-- Add more equipment as needed -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Equipment Management End -->
-
-<!-- Marketing Management Start -->
-<div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-light rounded h-100 p-4">
@@ -328,7 +180,75 @@
                 </div>
             </div>
             <!-- Marketing Management End -->
+             
+            <!-- Marketing Analysis Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Marketing Analysis</h6>
+                            <p>Analyze marketing performance data and generate periodic marketing reports. Identify market trends and support strategic marketing decisions.</p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                            <th>Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Total Visits</td>
+                                            <td>150,000</td>
+                                            <td>+10%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Interactions</td>
+                                            <td>25,000</td>
+                                            <td>+15%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Brand Awareness</td>
+                                            <td>High</td>
+                                            <td>Stable</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Conversion Rate</td>
+                                            <td>5%</td>
+                                            <td>+2%</td>
+                                        </tr>
+                                        <!-- Add more metrics as needed -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Marketing Analysis End -->
 
+            <!-- Future Strategy Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Future Strategy</h6>
+                            <p>Based on the current marketing performance, here are some proposed strategies for the future:</p>
+                            <ul>
+                                <li>Increase investment in social media marketing, particularly on platforms like TikTok and Instagram where engagement is high.</li>
+                                <li>Develop more engaging content to boost interactions on articles and other platforms.</li>
+                                <li>Expand Google Ads campaigns to reach a broader audience and increase brand awareness.</li>
+                                <li>Implement a referral program to leverage word-of-mouth marketing and increase organic growth.</li>
+                                <li>Analyze customer feedback to improve product offerings and customer satisfaction.</li>
+                                <li>Collaborate with influencers and bloggers to enhance brand visibility and credibility.</li>
+                                <li>Utilize data analytics to identify and target high-potential customer segments more effectively.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Future Strategy End -->
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
@@ -354,7 +274,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>

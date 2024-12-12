@@ -186,7 +186,7 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Freshly Brewed Dashboard</h3>
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Freshly Brewed</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -199,16 +199,19 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
+                    <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <div class="nav-item dropdown"></div>
+                    <a href="personnel_management.php" class="nav-item nav-link"><i class="fa fa-user-tie me-2"></i>Employee</a>
+                    <a href="equipment_management.php" class="nav-item nav-link"><i class="fa fa-tools me-2"></i>Equipment</a>
+                    <a href="marketing_management.php" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Marketing</a>
+                    <a href="strategy.php" class="nav-item nav-link"><i class="fa fa-lightbulb me-2"></i>Strategy</a>
 
-                    <a href="dashboard.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="widget.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Management</a>
                     <a href="analytics.php" class="nav-item nav-link"><i class="fa fa-chart-line me-2"></i>Analytics</a>
                     <a href="Cus_segment.php" class="nav-item nav-link"><i class="fa fa-users-cog me-2"></i>Segmentation</a>
+
                     <a href="peek_time.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>Peek Time</a>
                     <a href="manage_locations.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>Real Estate</a>
-
                     <a href="inventory_management.php" class="nav-item nav-link"><i class="fa fa-building me-2"></i>Storage</a>
-
                 </div>
             </nav>
         </div>
